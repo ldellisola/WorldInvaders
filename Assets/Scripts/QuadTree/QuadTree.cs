@@ -145,22 +145,6 @@ public class QuadTree<TType> where TType:IComparable
                 }
             }
 
-            //var shouldReduce = true;
-            //var initialValue = subNodes[0].Data;
-
-            //for (int i = 0; i < subNodes.Length; i++)
-            //{
-            //    shouldReduce &= (initialValue.CompareTo(subNodes[i].Data) == 0);
-            //    shouldReduce &= (subNodes[i].IsLeaf());
-            //}
-
-            //if (shouldReduce)
-            //{
-            //    this.Data = initialValue;
-            //    subNodes = null;
-            //}
-
-
             var retValue = subNodes[subdivIndex].Subdivide(targetPosition, value, depth - 1);
 
             var shouldReduce = true;

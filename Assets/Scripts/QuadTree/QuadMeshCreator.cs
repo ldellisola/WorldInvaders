@@ -46,7 +46,7 @@ public class QuadMeshCreator : MonoBehaviour
         GameObject chunk = new GameObject();
         chunk.name = "VoxelChunk";
         chunk.transform.parent = transform;
-        chunk.transform.localPosition = Vector3.zero;
+        chunk.transform.localPosition = new Vector3(0,0,-1);
 
         var mesh = new Mesh();
         var vertices = new List<Vector3>();
