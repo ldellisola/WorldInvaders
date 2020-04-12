@@ -11,7 +11,7 @@ public class QuadMeshCreator : MonoBehaviour
     public Material voxelMaterial;
 
     private GameObject previusMesh;
-    private bool initialized;
+    private bool initialized = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class QuadMeshCreator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(terrain.quadTree != null)
+        if(terrain.quadTree != null && !initialized)
         {
             initialized = true;
             terrain.quadTree.QuadTreeUpdated += (obj, args) => { generate = true; };
@@ -29,16 +29,13 @@ public class QuadMeshCreator : MonoBehaviour
         }
         if (generate)
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Start();
+
             var generatedMesh = GenerateMesh();
-            stopwatch.Stop();
 
             if (previusMesh != null)
                 Destroy(previusMesh);
             previusMesh = generatedMesh;
             generate = false;
-            UnityEngine.Debug.Log("Tardo: " + stopwatch.ElapsedMilliseconds);
         }
     }
 
@@ -58,7 +55,7 @@ public class QuadMeshCreator : MonoBehaviour
         var normals = new List<Vector3>();
 
         // Agarro todas las hojas que tengan valor verdaderos, es decir que esten activas
-        foreach (var leaf in terrain.quadTree.GetLeafNodes().Where(t=>t.value))
+        foreach (var leaf in terrain.quadTree.GetLeafNodes().Where(t=>t.Data))
         {
             var upperLeft = new Vector3(leaf.Position.x - leaf.Size * 0.5f, leaf.Position.y + leaf.Size * 0.5f, 0);
             var initialIndex = vertices.Count;
