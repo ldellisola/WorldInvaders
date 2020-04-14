@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ArrayQuadTree<bool>;
 
 public class ArrayDestructibleTerrain : MonoBehaviour
 {
@@ -26,37 +27,28 @@ public class ArrayDestructibleTerrain : MonoBehaviour
 
     }
 
-    //void OnDrawGizmos()
-    //{
+    void OnDrawGizmos()
+    {
 
-    //    if (quadTree != null)
-    //    {
+        if (quadTree != null)
+        {
 
-    //        DrawNode(quadTree.GetRoot());
-    //    }
-    //}
+            DrawNode(quadTree.nodes);
+        }
+    }
 
-    //private Color minColor = new Color(1, 1, 1, 1f);
-    //private Color maxColor = new Color(0, 0.5f, 1, 0.25f);
+    private Color minColor = new Color(1, 1, 1, 1f);
+    private Color maxColor = new Color(0, 0.5f, 1, 0.25f);
 
-    //private void DrawNode(QuadTree<bool>.QuadTreeNode<bool> node, int nodeDepth = 0)
-    //{
-    //    if (!node.IsLeaf())
-    //    {
-    //        if (node.Nodes != null)
-    //        {
-    //            foreach (var subnode in node.Nodes)
-    //            {
-    //                if (subnode != null)
-    //                {
-    //                    DrawNode(subnode, nodeDepth + 1);
-    //                }
-    //            }
-    //        }
-    //    }
-    //    Gizmos.color = Color.Lerp(minColor, maxColor, nodeDepth / (float)depth);
-    //    Gizmos.DrawWireCube(node.Position, new Vector3(1, 1, 0.1f) * node.Size);
-    //}
+    private void DrawNode(ArrayQuadTree<bool>.QuadTreeNode<bool>[] node, int index = 0)
+    {
+        DrawNode(node, index + 1);
+
+        Gizmos.color = Color.Lerp(minColor, maxColor, node[index].depth / (float)depth);
+        Gizmos.DrawWireCube(node[index].Position, new Vector3(1, 1, 0.1f) * node[index].Size);
+    }
+
+
 
 
 }

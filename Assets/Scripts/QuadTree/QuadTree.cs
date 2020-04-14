@@ -34,10 +34,10 @@ public class QuadTree<TType> where TType:IComparable
         var leafNodes = new LinkedList<QuadTreeNode<TType>>();
         node.CircleSubdivide(leafNodes, origin, radius, value, depth);
 
-        foreach (var leaf in leafNodes)
-        {
-            leaf.Data = value;
-        }
+        //foreach (var leaf in leafNodes)
+        //{
+        //    leaf.Data = value;
+        //}
 
         NotifyQuadtreeUpdate();
     }
@@ -228,11 +228,8 @@ public class QuadTree<TType> where TType:IComparable
 
             if (shouldReduce)
             {
-                Debug.Log("Depth is: " + depth);
-                Debug.Log("Data is: " + this.Data);
 
                 this.Data = initialValue;
-                Debug.Log("Data is now: " + this.Data);
 
                 subNodes = null;
             }

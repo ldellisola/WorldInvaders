@@ -15,7 +15,6 @@ public class MisilePool : MonoBehaviour
 
     public void Awake()
     {
-        print(misilePrefab);
         pool = new ObjectPool<Misile, Misile.Data>(MisilePoolTransform,misilePrefab);
         ExplosionsPool = new ObjectPool<MisileExplosion, MisileExplosion.Data>(MisilePoolTransform, ExplosionPrefab);
     }

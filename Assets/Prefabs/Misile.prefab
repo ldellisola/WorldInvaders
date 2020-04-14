@@ -68,8 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Body: {fileID: 9039016359651894697}
-  speed: 1
-  maxLifeTime: 4
+  speed: 14
+  maxLifeTime: 10
   PoolManager: {fileID: 0}
 --- !u!58 &7924959674458041811
 CircleCollider2D:
@@ -156,7 +156,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 123947785
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 1222
   m_Sprite: {fileID: 21300004, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

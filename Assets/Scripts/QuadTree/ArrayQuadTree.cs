@@ -12,7 +12,7 @@ using UnityEngine;
 
 public class ArrayQuadTree<TType> where TType :  IComparable
 {
-    private readonly QuadTreeNode<TType>[] nodes;
+    public readonly QuadTreeNode<TType>[] nodes;
     public int depth { get; private set; }
 
     public event EventHandler QuadTreeUpdated;
@@ -21,6 +21,8 @@ public class ArrayQuadTree<TType> where TType :  IComparable
         this.depth = depth;
         nodes = BuildQuadtree(position, size, depth);
     }
+
+   
 
     private QuadTreeNode<TType>[] BuildQuadtree(Vector2 position, float size, int depth)
     {
@@ -58,7 +60,12 @@ public class ArrayQuadTree<TType> where TType :  IComparable
 
     }
 
-    
+    internal void Insert(Vector2 position, TType v)
+    {
+        var node = Search(position, nodes, 0,v);
+        node.Data = v;
+    }
+
     internal void Insert(Vector2 origin, float radius, TType value)
     {
         var leafNodes = new LinkedList<QuadTreeNode<TType>>();
@@ -94,6 +101,25 @@ public class ArrayQuadTree<TType> where TType :  IComparable
 
 
 
+    public QuadTreeNode<TType> Search(Vector2 targetPosition, QuadTreeNode<TType>[] tree, int index,TType value)
+    {
+        if (this.depth == tree[index].depth)
+        {
+            tree[index].Data = value;
+            return tree[index];
+        }
+
+        int nextNode = 4 * index;
+
+        var indx = GetIndexOfPosition(targetPosition, tree[index].Position);
+
+        //QuadTreeNode<TType>[] subnodes = new QuadTreeNode<TType>[4];
+
+        //for (int i = 1; i <= 4; ++i)
+        //    subnodes[i - 1] = nextNode + i;
+
+        return Search(targetPosition,tree,1 + nextNode + indx,value);
+    }
     public void CircleSearch(LinkedList<QuadTreeNode<TType>> selectedNodes, Vector2 targetPosition, float radius, QuadTreeNode<TType>[] tree, int index)
     {
         if (this.depth == tree[index].depth)
@@ -109,7 +135,7 @@ public class ArrayQuadTree<TType> where TType :  IComparable
                 CircleSearch(selectedNodes, targetPosition, radius,tree,nextNode + i);
 
     }
-    private bool ContainedInCircle(Vector2 origin, float radius, QuadTreeNode<TType> node)
+    public bool ContainedInCircle(Vector2 origin, float radius, QuadTreeNode<TType> node)
     {
 
         Vector2 diff = node.Position - origin;

@@ -20,6 +20,11 @@ public class Misile : MonoBehaviour, IPooledObject<Misile.Data>
     public float maxLifeTime;
     private float lifetime = 0;
 
+    public float Radius => GetComponent<CircleCollider2D>().radius / 100;
+
+
+    public float ExplosionRadius { get; private set; } = 0.2f;
+
     public PoolManager PoolManager;
 
 
@@ -27,7 +32,7 @@ public class Misile : MonoBehaviour, IPooledObject<Misile.Data>
     {
         this.transform.position = data.pos;
         lifetime = 0;
-        Body.AddForce(transform.position * speed, ForceMode2D.Impulse);
+        Body.AddForce(transform.position * speed , ForceMode2D.Force);
     }
 
     void Start()
@@ -52,9 +57,15 @@ public class Misile : MonoBehaviour, IPooledObject<Misile.Data>
 
 
 
-    void OnTriggerEnter2D(Collider2D other)
+    //void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    print("Colision");
+        
+    //}
+
+
+    public void Explode()
     {
-        print("Colision");
         PoolManager.MisilePool.ExplosionsPool.Add(new MisileExplosion.Data(this.transform.position));
 
         this.gameObject.SetActive(false);

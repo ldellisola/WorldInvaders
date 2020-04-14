@@ -18,12 +18,10 @@ public class QuadTreePencil : MonoBehaviour
         // click izquierdo
         if (Input.GetMouseButton(0))
         {
-            Debug.Log("Deleting: " + insertionPoint);
             terrain.quadTree.Insert(insertionPoint.origin, false);
         } // Click derecho
         else if (Input.GetMouseButton(1))
         {
-            Debug.Log("Inserting: " + insertionPoint);
 
             terrain.quadTree.Insert(insertionPoint.origin, true);
         }

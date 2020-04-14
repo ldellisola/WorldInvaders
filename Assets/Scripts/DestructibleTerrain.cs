@@ -60,15 +60,15 @@ public class DestructibleTerrain : MonoBehaviour
 
 
 
-    void OnTriggerEnter2D(Collider2D obj)
-    {
-        Misile mis;
+    //void OnTriggerEnter2D(Collider2D obj)
+    //{
+    //    Misile mis;
 
-        if (obj.TryGetComponent(out mis))
-        {
+    //    if (obj.TryGetComponent(out mis))
+    //    {
 
-        }
-    }
+    //    }
+    //}
 
 
 
