@@ -73,7 +73,7 @@ public class QuadTree<TType> where TType:IComparable
     }
     public class QuadTreeNode<TType> where TType:IComparable
     {
-        Vector2 position;
+        public Vector2 Position { get; set; }
         float size;
         QuadTreeNode<TType>[] subNodes;
         public TType Data { get; internal set; }
@@ -82,7 +82,7 @@ public class QuadTree<TType> where TType:IComparable
 
         public QuadTreeNode(Vector2 pos, float size, int depth, TType value = default(TType))
         {
-            position = pos;
+            Position = pos;
             this.size = size;
             this.Data = value;
             this.depth = depth;
@@ -93,10 +93,6 @@ public class QuadTree<TType> where TType:IComparable
             get { return subNodes; }
         }
 
-        public Vector2 Position
-        {
-            get { return position; }
-        }
 
         public float Size
         {
@@ -111,7 +107,7 @@ public class QuadTree<TType> where TType:IComparable
                 return this;
             }
 
-            var subdivIndex = GetIndexOfPosition(targetPosition, position);
+            var subdivIndex = GetIndexOfPosition(targetPosition, Position);
 
             if (subNodes == null)
             {
@@ -119,7 +115,7 @@ public class QuadTree<TType> where TType:IComparable
 
                 for (int i = 0; i < subNodes.Length; ++i)
                 {
-                    Vector2 newPos = position;
+                    Vector2 newPos = Position;
                     // Y axis
                     if ((i & 2) == 2)
                     {
@@ -174,7 +170,7 @@ public class QuadTree<TType> where TType:IComparable
                 return;
             }
 
-            var subdivIndex = GetIndexOfPosition(targetPosition, position);
+            var subdivIndex = GetIndexOfPosition(targetPosition, Position);
 
             if (subNodes == null)
             {
@@ -182,7 +178,7 @@ public class QuadTree<TType> where TType:IComparable
 
                 for (int i = 0; i < subNodes.Length; ++i)
                 {
-                    Vector2 newPos = position;
+                    Vector2 newPos = Position;
                     // Y axis
                     if ((i & 2) == 2)
                     {
@@ -238,7 +234,7 @@ public class QuadTree<TType> where TType:IComparable
         private bool ContainedInCircle(Vector2 origin, float radius)
         {
 
-            Vector2 diff = this.position - origin;
+            Vector2 diff = this.Position - origin;
 
             diff.x = Mathf.Max(0, Mathf.Abs(diff.x) - size / 2);
             diff.y = Mathf.Max(0, Mathf.Abs(diff.y) - size / 2);

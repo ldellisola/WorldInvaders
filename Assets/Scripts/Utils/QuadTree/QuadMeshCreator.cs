@@ -16,14 +16,15 @@ public class QuadMeshCreator : MonoBehaviour
     private bool initialized = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (ArrayTerrain!=null &&ArrayTerrain.isActiveAndEnabled)
+        if (ArrayTerrain!=null && ArrayTerrain.isActiveAndEnabled)
         {
             if (ArrayTerrain.quadTree != null && !initialized)
             {
