@@ -48,7 +48,6 @@ public class SpriteAnimator : MonoBehaviour
 
         if (!loops && spriteIndex == 0)
         {
-            print("APAGO animacion");
             IsPlaying = false;
         }
         else

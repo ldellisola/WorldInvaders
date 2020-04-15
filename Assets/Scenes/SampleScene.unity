@@ -1515,7 +1515,7 @@ MonoBehaviour:
   generate: 1
   ArrayTerrain: {fileID: 1917439600}
   Terrain: {fileID: 1917439593}
-  voxelMaterial: {fileID: 2100000, guid: 9ed82dbb7ec6291449fb8709e3019461, type: 2}
+  voxelMaterial: {fileID: 2100000, guid: a74e88492fa30e540a88a0a28e6dd93c, type: 2}
 --- !u!212 &1917439595
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1666,7 +1666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1211b1c9b693a974b88541ef19597356, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotateSpeed: 0.25
+  RotateSpeed: -0.25
   RotateawaySpeed: 0.25
   Radius: 2.4
   rotation: {x: 0, y: 0}

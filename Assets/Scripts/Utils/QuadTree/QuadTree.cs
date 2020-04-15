@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public enum QuadTreeIndex
@@ -48,6 +50,23 @@ public class QuadTree<TType> where TType:IComparable
         if (this.QuadTreeUpdated != null)
         {
             QuadTreeUpdated(this, new EventArgs());
+        }
+    }
+
+    public void RunRecursively(QuadTreeNode<TType> node, [CanBeNull] Action<QuadTreeNode<TType>> OnStart, [CanBeNull] Action<QuadTreeNode<TType>> OnExit)
+    {
+        OnStart?.Invoke(node);
+
+        if (node.IsLeaf())
+        {
+            OnExit?.Invoke(node);
+            return;
+        }
+
+
+        foreach (var subnode in node.Nodes)
+        {
+            RunRecursively(subnode,OnStart,OnExit);
         }
     }
 
