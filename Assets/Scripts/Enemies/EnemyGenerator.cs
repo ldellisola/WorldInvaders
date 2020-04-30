@@ -4,33 +4,32 @@ using UnityEngine;
 
 public class EnemyGenerator : MonoBehaviour
 {
-    public GameObject EasyEnemy;
-    public int easyEnemySpawnInterval = 4;
-    public Vector3 easyEnemySpainPoint;
-    private float easyEnemySpawnTimer = 0;
     public PoolManager Pools;
+    public List<BaseEnemyData> Enemies;
 
+    private int i = 0;
+    private List<Vector2> initPos = new List<Vector2>{new Vector2(-5,9),new Vector2(5,9), new Vector2(-5,-9)};
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Enemies.ForEach(t=>t.Initialize(initPos[i++]));
     }
 
+    private bool created = false;
     // Update is called once per frame
     void Update()
     {
+        if(!created)
+            Enemies.ForEach(t =>
+            {
+                t.AddTime(Time.deltaTime);
+                if (t.HasToBeCreated())
+                {
+                    Pools.EnemyPool.pool.Add(t);
+                    created = true;
+                }
+            });
 
-        easyEnemySpawnTimer += Time.deltaTime;
-        if(easyEnemySpawnTimer >= easyEnemySpawnInterval)
-        {
-            easyEnemySpawnTimer = 0;
-            print("New Enemy!");
-            Vector2 vector = new Vector2(Random.Range(2, 4) * (Random.value > 0.5 ? -1 : 1), Random.Range(3, 9) * (Random.value > 0.5 ? -1 : 1));
-
-            Pools.EnemyPool.pool.Add(new Enemy.Data(vector));
-            
-        }
-        
     }
 }

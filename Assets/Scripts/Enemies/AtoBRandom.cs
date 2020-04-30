@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AtoBRandom : MonoBehaviour
 {
-    public float Speed = 0.5f;
     public Transform StartPoint;
     public Vector3 EndPoint;
 
@@ -13,18 +12,17 @@ public class AtoBRandom : MonoBehaviour
 
     public int NewDirectionInterval = 1;
 
-    private float time = 0;
+    private float time = 1;
 
     private float _angle = 0;
-
     private Vector3 CurrentDirection;
+
 
     // Use this for initialization
     void Start()
     {
         //StartPoint.position = new Vector3(-4f, 9, 0);
         EndPoint = new Vector3(0, 0, 0);
-        CurrentDirection = CalculateDirection();
     }
 
 
@@ -32,30 +30,19 @@ public class AtoBRandom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        var data = GetComponent<Enemy>().data;
+
         time += Time.deltaTime;
-        //print(time);
         if (time >= NewDirectionInterval )
         {
             StartPoint = transform;
-            CurrentDirection = CalculateDirection();
-            //CurrentDirection.Normalize();
-            print(CurrentDirection);
+            CurrentDirection = CalculateDirection(data);
             time = 0;
-
         }
         transform.Translate(CurrentDirection * Time.smoothDeltaTime);
-
-        //Vector2 direction = transform.position - EndPoint;
-
-        //float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-
-        //Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.back);
-
-        //transform.rotation = rotation;
     }
 
-    private Vector3 CalculateDirection()
+    private Vector3 CalculateDirection(BaseEnemyData data)
     {
 
         var exactDirection = (EndPoint - StartPoint.position);
@@ -68,11 +55,11 @@ public class AtoBRandom : MonoBehaviour
 
         if(r > 8)
         {
-            exactDirection = Vector3.right * rnd.Next(-1, 1) * Speed;
+            exactDirection = Vector3.right * rnd.Next(-1, 1) * data.velocity;
         }
         else if(r > 5)
         {
-            exactDirection = Vector3.up *rnd.Next(-1, 1) * Speed;
+            exactDirection = Vector3.up *rnd.Next(-1, 1) * data.velocity;
 
         }else if(r > 3)
         {

@@ -164,11 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31148f6da247164a80e8e3e58a3f7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EasyEnemy: {fileID: 8262174214181469997, guid: 9f07fec7c8c4cf2468d32b28c14c6392,
-    type: 3}
-  easyEnemySpawnInterval: 10000
-  easyEnemySpainPoint: {x: -4, y: 9, z: 0}
   Pools: {fileID: 793462857}
+  Enemies:
+  - {fileID: 11400000, guid: 34ef105c7a5300c4c8736cc19d5a8712, type: 2}
 --- !u!1 &59118547
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &471424135
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1292,6 +1290,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MisileStartPosition: {fileID: 2014680400}
   PoolManager: {fileID: 793462857}
+  ShootingMovementThreshold: 0.001
+  ShootingUpdateTime: 1
 --- !u!61 &1459154547
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1423,6 +1423,11 @@ PrefabInstance:
       propertyPath: pools
       value: 
       objectReference: {fileID: 793462857}
+    - target: {fileID: 8262174214181469969, guid: 9f07fec7c8c4cf2468d32b28c14c6392,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8262174214181469970, guid: 9f07fec7c8c4cf2468d32b28c14c6392,
         type: 3}
       propertyPath: m_RootOrder
@@ -1485,7 +1490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1917439593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1499,7 +1504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 4
-  depth: 10
+  depth: 5
 --- !u!114 &1917439594
 MonoBehaviour:
   m_ObjectHideFlags: 0

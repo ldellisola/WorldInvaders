@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4a146f65adf3540b926ed322eb9f1b, type: 3}
+  m_Name: RegularMisile
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 4385501425044414559, guid: fb16cc86978e6464d9ecc8802812674a, type: 3}
+  range: 4
+  timeAlive: 10
+  speed: 0.2
+  damage: 0.1
