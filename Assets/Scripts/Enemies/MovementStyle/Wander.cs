@@ -14,7 +14,7 @@ namespace Assets.Scripts.Enemies.MovementStyle
         private Vector3 target;
 
         private const float VerticalMargin = 1;
-        private const float HorizontalMargin = 2;
+        private const float HorizontalMargin = 6;
 
         private const float MaxTimeWithTarget = 5;
 
@@ -46,12 +46,19 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
         private Vector3 GenerateNewTarget(Vector3 position)
         {
-            Vector3 newT = Random.insideUnitCircle;
-            newT.y *= VerticalMargin;
-            newT.x *= HorizontalMargin;
+            Vector3 a;
+            do
+            {
+                Vector3 newT = Random.insideUnitCircle;
+                newT.y *= VerticalMargin;
+                newT.x *= HorizontalMargin;
 
-            var a = position + newT;
-            a.z = 0;
+                a = position + newT;
+                a.z = 0;
+
+
+            } while (Physics2D.Raycast(position,a,(a - position).magnitude,1<<8).collider != null);
+
 
             return a;
         }

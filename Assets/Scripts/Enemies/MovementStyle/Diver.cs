@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Enemies.MovementStyle
 {
+    // Physics.Raycast y poner caja externa.
     /// <summary>
     ///  Based on the Seek strategy, this movement style will try to dive as fast as possible to the planet
     ///
