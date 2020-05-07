@@ -8,6 +8,7 @@ public class CircularControls : MonoBehaviour
     public float RotateawaySpeed = 2f;
     public float Radius = 2.4f;
 
+    private float Width => GetComponent<BoxCollider2D>().size.x;
 
 
     public Vector2 rotation;
@@ -23,14 +24,14 @@ public class CircularControls : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && CanMoveRight())
         {
             _angle += RotateSpeed * Time.deltaTime;
 
             var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
             transform.position = _centre.transform.position + offset;
         }
-        else if(Input.GetKey(KeyCode.LeftArrow))
+        else if(Input.GetKey(KeyCode.LeftArrow) && CanMoveLeft())
         {
             _angle -= RotateSpeed * Time.deltaTime;
             var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
@@ -49,5 +50,29 @@ public class CircularControls : MonoBehaviour
 
 
 
+    }
+
+    private bool CanMoveRight()
+    {
+        return CanMove(Vector2.right, 1 + Width / 2);
+
+    }
+
+    private bool CanMoveLeft()
+    {
+        return CanMove(Vector2.left, 1 + Width / 2);
+    }
+
+    private bool CanMove(Vector2 direction, float size)
+    {
+        Vector2 a = transform.position;
+
+
+        var hit = Physics2D.Raycast(a, direction, size, LayerMask.GetMask("World Border"));
+
+
+        Debug.DrawRay(a, direction * size, Color.red,10);
+
+        return hit.collider == null;
     }
 }
