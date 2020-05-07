@@ -5,14 +5,31 @@ using UnityEngine;
 public class FitToCamera : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    public bool recalculate = false;
     public void Awake()
     {
-        var border = Camera.main.ScreenToWorldPoint(new Vector3((float)Camera.main.pixelWidth, (float)Camera.main.pixelHeight));
+        // var border = Camera.main.ScreenToWorldPoint(new Vector3((float)Camera.main.pixelWidth, (float)Camera.main.pixelHeight));
+        //
+        //
+        // var sp = GetComponent<SpriteRenderer>();
+        // border.z = 0;
+        // sp.size = border * 2;
 
+    }
 
-        var sp = GetComponent<SpriteRenderer>();
-        border.z = 0;
-        sp.size = border * 2;
+    public void Update()
+    {
+        if (recalculate)
+        {
+            var border =
+                Camera.main.ScreenToWorldPoint(new Vector3((float) Camera.main.pixelWidth,
+                    (float) Camera.main.pixelHeight));
 
+            var sp = GetComponent<SpriteRenderer>();
+            border.z = 0;
+            sp.size = border * 2;
+            recalculate = false;
+        }
     }
 }

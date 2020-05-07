@@ -64,14 +64,16 @@ namespace Assets.Scripts.Enemies.MovementStyle
                 Vector3 newT = Random.insideUnitCircle;
                 newT.y *= VerticalMargin;
                 newT.x *= HorizontalMargin;
-
                 a = position + newT;
 
                 a.z = 0;
 
+
                 position.z = 0;
                 var notNormDir = newT;
                 newT.Normalize();
+
+                float maxDistance = 30;
 
                 hit = Physics2D.Raycast(a,Vector2.left, MinDistanceToBorder, LayerMask.GetMask("World Border"));
                 Debug.DrawRay(position, notNormDir, Color.magenta, 10);
@@ -80,7 +82,11 @@ namespace Assets.Scripts.Enemies.MovementStyle
                 {
                     Debug.Log(hit.collider.gameObject.name);
                     Debug.DrawRay(a, Vector2.left, Color.cyan, 10);
-                    continue;
+
+                    hit = Physics2D.Raycast(a, Vector2.left, maxDistance, LayerMask.GetMask("World Border"));
+
+                    if(hit.collider == null || hit.collider.gameObject.name != "Left Wall")
+                        continue;
                 }
 
 
@@ -91,7 +97,11 @@ namespace Assets.Scripts.Enemies.MovementStyle
                 {
                     Debug.Log(hit.collider.gameObject.name);
                     Debug.DrawRay(a, Vector2.right, Color.cyan, 10);
-                    continue;
+
+                    hit = Physics2D.Raycast(a, Vector2.right, maxDistance, LayerMask.GetMask("World Border"));
+
+                    if (hit.collider == null || hit.collider.gameObject.name != "Right Wall")
+                        continue;
                 }
 
 
@@ -102,7 +112,11 @@ namespace Assets.Scripts.Enemies.MovementStyle
                 {
                     Debug.Log(hit.collider.gameObject.name);
                     Debug.DrawRay(a, Vector2.up, Color.cyan, 10);
-                    continue;
+
+                    hit = Physics2D.Raycast(a, Vector2.up, maxDistance, LayerMask.GetMask("World Border"));
+
+                    if (hit.collider == null || hit.collider.gameObject.name != "Top Wall")
+                        continue;
                 }
 
 
@@ -113,14 +127,26 @@ namespace Assets.Scripts.Enemies.MovementStyle
                 {
                     Debug.Log(hit.collider.gameObject.name);
                     Debug.DrawRay(a, Vector2.down, Color.cyan, 10);
-                    continue;
+
+                    hit = Physics2D.Raycast(a, Vector2.down, maxDistance, LayerMask.GetMask("World Border"));
+
+                    if (hit.collider == null || hit.collider.gameObject.name != "Bottom Wall")
+                        continue;
+
                 }
+
+                
 
 
 
             } while (hit.collider != null);
 
-            
+            if (hit.collider != null)
+            {
+                Wander wew = null;
+                wew.Update(null, null);
+            }
+
             //Debug.DrawRay(a,a + new Vector3(1,0), Color.red, 10);
             //Debug.DrawRay(a,a + new Vector3(1,1), Color.red, 10);
             //Debug.DrawRay(a,a + new Vector3(0,1), Color.red, 10);

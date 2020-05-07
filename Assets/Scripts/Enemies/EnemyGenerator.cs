@@ -6,30 +6,53 @@ public class EnemyGenerator : MonoBehaviour
 {
     public PoolManager Pools;
     public List<BaseEnemyData> Enemies;
+    public float outerRim = 10;
 
     private int i = 0;
-    private List<Vector2> initPos = new List<Vector2>{new Vector2(0,-9),new Vector2(5,9), new Vector2(-5,-9)};
+    private List<Vector2> initPos = new List<Vector2>();
 
     // Start is called before the first frame update
     void Start()
     {
-        Enemies.ForEach(t=>t.Initialize(initPos[i++]));
+        //Enemies.ForEach(t=>t.Initialize(initPos[i++]));
     }
 
-    private bool created = false;
     // Update is called once per frame
     void Update()
     {
-        if(!created)
             Enemies.ForEach(t =>
             {
                 t.AddTime(Time.deltaTime);
                 if (t.HasToBeCreated())
                 {
+                    t.initialPositon = CalculatePosition();
+                    initPos.Add(t.initialPositon);
                     Pools.EnemyPool.pool.Add(t);
-                    created = true;
                 }
             });
 
+    }
+
+    public void OnDrawGizmos()
+    {
+        initPos.ForEach(t =>
+        {
+            Gizmos.DrawSphere(t,0.5f);
+        });
+    }
+
+    private Vector2 CalculatePosition()
+    {
+        Vector2 pos;
+        do
+        {
+            pos = Random.onUnitSphere;
+
+            pos.y = Mathf.Abs(pos.y);
+        } while (pos.y < 0.5);
+
+
+
+        return pos * outerRim*3;
     }
 }

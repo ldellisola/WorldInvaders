@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
     private SpriteRenderer sp;
     private float life = 0;
     private IMovementStyle movement = null;
+    private bool InZone = false;
+
+    private Diver initalMovement = null;
 
     public void Awake()
     {
@@ -49,14 +52,74 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
                 break;
         }
 
+        initalMovement = new Diver(new Vector2(0,10));
+        InZone = false;
+
     }
 
 
     public void Update()
     {
-        
-        movement.Update(data,this);
+        if(InZone)
+            movement.Update(data,this);
+        else
+        {
+            initalMovement.Update(data, this);
 
+            InZone = isInZone();
+        }
+
+
+    }
+
+    private bool isInZone()
+    {
+        float distance = 30;
+
+        var hit = Physics2D.Raycast(transform.position, Vector2.left, distance, LayerMask.GetMask("World Border"));
+        //Debug.DrawRay(transform.position, Vector2.left *distance , Color.magenta, 10);
+
+        if (hit.collider == null || hit.collider.gameObject.name != "Left Wall")
+        {
+
+            return false;
+        }
+
+
+
+        hit = Physics2D.Raycast(transform.position, Vector2.right, distance, LayerMask.GetMask("World Border"));
+        //Debug.DrawRay(transform.position, Vector2.right * distance, Color.magenta, 10);
+
+        if (hit.collider == null || hit.collider.gameObject.name != "Right Wall")
+        {
+
+            return false;
+        }
+
+
+
+        hit = Physics2D.Raycast(transform.position, Vector2.up, distance, LayerMask.GetMask("World Border"));
+        //Debug.DrawRay(transform.position, Vector2.up * distance, Color.magenta, 10);
+
+        if (hit.collider == null || hit.collider.gameObject.name != "Top Wall")
+        {
+
+            return false;
+        }
+
+
+
+        hit = Physics2D.Raycast(transform.position, Vector2.down, distance, LayerMask.GetMask("World Border"));
+        //Debug.DrawRay(transform.position, Vector2.down * distance, Color.magenta, 10);
+
+        if (hit.collider == null || hit.collider.gameObject.name != "Bottom Wall")
+        {
+
+            return false;
+        }
+
+
+        return true;
     }
 
     public void OnDrawGizmos()

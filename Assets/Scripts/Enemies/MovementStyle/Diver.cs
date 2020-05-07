@@ -17,6 +17,16 @@ namespace Assets.Scripts.Enemies.MovementStyle
     public class Diver: IMovementStyle
     {
         private Vector3 target = Vector3.zero;
+
+        public Diver()
+        {
+        }
+
+        public Diver(Vector2 targ)
+        {
+            target = targ;
+        }
+
         public void Update(BaseEnemyData data, MonoBehaviour enemy)
         {
             enemy.transform.Translate(
