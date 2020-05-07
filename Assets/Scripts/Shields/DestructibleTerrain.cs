@@ -13,7 +13,7 @@ public class DestructibleTerrain : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        quadTree = new QuadTree<bool>(transform.position, size, depth);
+        quadTree = new QuadTree<bool>(transform.position,new Vector2(0,0), size, depth);
     }
 
     // Update is called once per frame

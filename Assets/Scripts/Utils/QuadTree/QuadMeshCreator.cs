@@ -15,10 +15,24 @@ public class QuadMeshCreator : MonoBehaviour
     private GameObject previusMesh;
     private bool initialized = false;
 
+    public Vector2 WorldUnitsInCamera = new Vector2();
+    public Vector2 WorldToPixelAmount = new Vector2();
+
+    //public GameObject Camera;
+
     // Start is called before the first frame update
     void Awake()
     {
         GetComponent<SpriteRenderer>().enabled = false;
+
+       // Camera = UnityEngine.Camera.main.gameObject;
+
+        // Finding Pixel To World Unit Conversion Based On Orthographic Size Of Camera
+        // WorldUnitsInCamera.y = Camera.GetComponent<Camera>().orthographicSize * 2;
+        //  WorldUnitsInCamera.x = WorldUnitsInCamera.y * Screen.width / Screen.height;
+        //
+        //  WorldToPixelAmount.x = Screen.width / WorldUnitsInCamera.x;
+        //  WorldToPixelAmount.y = Screen.height / WorldUnitsInCamera.y;
     }
 
     // Update is called once per frame
@@ -65,6 +79,18 @@ public class QuadMeshCreator : MonoBehaviour
         }
     }
 
+    public Vector2 ConvertToWorldUnits(Vector2Int pixels)
+    {
+        Vector2 returnVec2 = new Vector2();
+
+        // returnVec2.x = ((pixels.x / WorldToPixelAmount.x) - (WorldUnitsInCamera.x / 2)) +
+        //                Camera.transform.position.x;
+        // returnVec2.y = ((pixels.y / WorldToPixelAmount.y) - (WorldUnitsInCamera.y / 2)) +
+        //                Camera.transform.position.y;
+
+        return returnVec2;
+    }
+
 
     private GameObject GenerateMesh(ArrayDestructibleTerrain terrain)
     {
@@ -92,6 +118,10 @@ public class QuadMeshCreator : MonoBehaviour
         var uvs = new List<Vector2>();
         var normals = new List<Vector3>();
 
+        var width = voxelMaterial.mainTexture.width;
+        var height = voxelMaterial.mainTexture.height;
+        
+
         // Agarro todas las hojas que tengan valor verdaderos, es decir que esten activas
         foreach (var leaf in terrain.quadTree.GetLeafNodes().Where(t=>t.Data))
         {
@@ -103,13 +133,25 @@ public class QuadMeshCreator : MonoBehaviour
             vertices.Add(upperLeft + Vector3.right * leaf.Size);
             vertices.Add(upperLeft + Vector3.down * leaf.Size);;
             vertices.Add(upperLeft + Vector3.down * leaf.Size + Vector3.right * leaf.Size);
-           
+
             // los UVS son iguales que tus vertices para que funcione bien el tiling
-            uvs.Add(upperLeft);
-            uvs.Add(upperLeft + Vector3.right * leaf.Size);
-            uvs.Add(upperLeft + Vector3.down * leaf.Size);;
-            uvs.Add(upperLeft + Vector3.down * leaf.Size + Vector3.right * leaf.Size);
-            
+
+            // uvs.Add(upperLeft);
+            // uvs.Add(upperLeft + Vector3.right * leaf.Size);
+            // uvs.Add(upperLeft + Vector3.down * leaf.Size);;
+            // uvs.Add(upperLeft + Vector3.down * leaf.Size + Vector3.right * leaf.Size);
+            //
+
+            uvs.Add(new Vector2(0.4f, 0.5f));
+            uvs.Add(new Vector2(0.5f, 0.5f));
+            uvs.Add(new Vector2(0.5f, 0.5f));
+            uvs.Add(new Vector2(0.5f, 0.5f));
+            uvs.Add(new Vector2(0.5f, 0.5f));
+            // uvs.Add(new Vector2(1,0));
+            // uvs.Add(new Vector2(1, 1)); ;
+            // uvs.Add(new Vector2(0, 1));
+
+
             // las nromales apuntan todas al mismo lado por que es 2D, en la direccion opuesta a la luz
             normals.Add(Vector3.back);
             normals.Add(Vector3.back);
@@ -168,24 +210,45 @@ public class QuadMeshCreator : MonoBehaviour
         var uvs = new List<Vector2>();
         var normals = new List<Vector3>();
 
+
+        float height = terrain.size;
+        float width = terrain.size;
+
+
         // Agarro todas las hojas que tengan valor verdaderos, es decir que esten activas
         foreach (var leaf in terrain.quadTree.GetLeafNodes().Where(t=>t.Data))
         {
             var upperLeft = new Vector3(leaf.Position.x - leaf.Size * 0.5f, leaf.Position.y + leaf.Size * 0.5f, 0);
+            var upperLeftLocal = new Vector3(width/2 + leaf.LocalPosition.x - leaf.Size * 0.5f, (height/2) +leaf.LocalPosition.y + leaf.Size * 0.5f, 0);
+
             var initialIndex = vertices.Count;
-           
+
             // Creo los vertices de mi cuadrado
+
             vertices.Add(upperLeft);
             vertices.Add(upperLeft + Vector3.right * leaf.Size);
-            vertices.Add(upperLeft + Vector3.down * leaf.Size);;
+            vertices.Add(upperLeft + Vector3.down * leaf.Size); ;
             vertices.Add(upperLeft + Vector3.down * leaf.Size + Vector3.right * leaf.Size);
-           
-            // los UVS son iguales que tus vertices para que funcione bien el tiling
-            uvs.Add(upperLeft);
-            uvs.Add(upperLeft + Vector3.right * leaf.Size);
-            uvs.Add(upperLeft + Vector3.down * leaf.Size);;
-            uvs.Add(upperLeft + Vector3.down * leaf.Size + Vector3.right * leaf.Size);
-            
+
+
+            // creo los UVS
+            uvs.Add(new Vector3(upperLeftLocal.x / width, upperLeftLocal.y / height));
+
+            var a = upperLeftLocal + Vector3.right * leaf.Size;
+            a.x /= width;
+            a.y /= height;
+            uvs.Add(a);
+
+            a = upperLeftLocal + Vector3.down * leaf.Size;
+            a.x /= width;
+            a.y /= height;
+            uvs.Add(a); ;
+
+            a = upperLeftLocal + Vector3.down * leaf.Size + Vector3.right * leaf.Size;
+            a.x /= width;
+            a.y /= height;
+            uvs.Add(a);
+
             // las nromales apuntan todas al mismo lado por que es 2D, en la direccion opuesta a la luz
             normals.Add(Vector3.back);
             normals.Add(Vector3.back);

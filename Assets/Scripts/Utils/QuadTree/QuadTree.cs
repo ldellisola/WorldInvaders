@@ -18,9 +18,9 @@ public class QuadTree<TType> where TType:IComparable
     private int depth;
 
     public event EventHandler QuadTreeUpdated;
-    public QuadTree(Vector2 position, float size, int depth)
+    public QuadTree(Vector2 position, Vector2 localPos, float size, int depth)
     {
-        node = new QuadTreeNode<TType>(position, size, depth);
+        node = new QuadTreeNode<TType>(position, localPos, size, depth);
         this.depth = depth;
     }
 
@@ -93,15 +93,17 @@ public class QuadTree<TType> where TType:IComparable
     public class QuadTreeNode<TType> where TType:IComparable
     {
         public Vector2 Position { get; set; }
+        public Vector2 LocalPosition { get; set; }
         float size;
         QuadTreeNode<TType>[] subNodes;
         public TType Data { get; internal set; }
 
         public int depth;
 
-        public QuadTreeNode(Vector2 pos, float size, int depth, TType value = default(TType))
+        public QuadTreeNode(Vector2 pos, Vector2 localPos ,float size, int depth, TType value = default(TType))
         {
             Position = pos;
+            LocalPosition = localPos;
             this.size = size;
             this.Data = value;
             this.depth = depth;
@@ -135,27 +137,32 @@ public class QuadTree<TType> where TType:IComparable
                 for (int i = 0; i < subNodes.Length; ++i)
                 {
                     Vector2 newPos = Position;
+                    Vector2 newLocalPos = LocalPosition;
                     // Y axis
                     if ((i & 2) == 2)
                     {
                         newPos.y -= size * 0.25f;
+                        newLocalPos.y -= size * 0.25f;
                     }
                     else
                     {
                         newPos.y += size * 0.25f;
+                        newLocalPos.y += size * 0.25f;
                     }
 
                     // X axis
                     if ((i & 1) == 1)
                     {
                         newPos.x += size * 0.25f;
+                        newLocalPos.x += size * 0.25f;
                     }
                     else
                     {
                         newPos.x -= size * 0.25f;
+                        newLocalPos.x -= size * 0.25f;
                     }
 
-                    subNodes[i] = new QuadTreeNode<TType>(newPos, size * 0.5f, depth-1);
+                    subNodes[i] = new QuadTreeNode<TType>(newPos, newLocalPos, size * 0.5f, depth-1);
 
                 }
             }
@@ -198,27 +205,32 @@ public class QuadTree<TType> where TType:IComparable
                 for (int i = 0; i < subNodes.Length; ++i)
                 {
                     Vector2 newPos = Position;
+                    Vector2 newLocalPos = LocalPosition;
                     // Y axis
                     if ((i & 2) == 2)
                     {
                         newPos.y -= size * 0.25f;
+                        newLocalPos.y -= size * 0.25f;
                     }
                     else
                     {
                         newPos.y += size * 0.25f;
+                        newLocalPos.y += size * 0.25f;
                     }
 
                     // X axis
                     if ((i & 1) == 1)
                     {
                         newPos.x += size * 0.25f;
+                        newLocalPos.x += size * 0.25f;
                     }
                     else
                     {
                         newPos.x -= size * 0.25f;
+                        newLocalPos.x -= size * 0.25f;
                     }
 
-                    subNodes[i] = new QuadTreeNode<TType>(newPos, size * 0.5f, depth - 1,Data);
+                    subNodes[i] = new QuadTreeNode<TType>(newPos, newLocalPos, size * 0.5f, depth - 1,Data);
 
                 }
 
