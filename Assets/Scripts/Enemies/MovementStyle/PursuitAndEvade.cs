@@ -13,5 +13,10 @@ namespace Assets.Scripts.Enemies.MovementStyle
         {
             throw new NotImplementedException();
         }
+
+        public void DrawGizmos(BaseEnemyData data, MonoBehaviour enemy)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

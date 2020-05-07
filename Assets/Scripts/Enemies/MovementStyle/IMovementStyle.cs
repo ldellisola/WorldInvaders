@@ -10,5 +10,7 @@ namespace Assets.Scripts.Enemies.MovementStyle
     interface IMovementStyle
     {
         void Update(BaseEnemyData data, MonoBehaviour enemy);
+
+        void DrawGizmos(BaseEnemyData data, MonoBehaviour enemy);
     }
 }

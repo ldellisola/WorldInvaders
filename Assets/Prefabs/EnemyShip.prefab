@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 8262174214181469969}
   - component: {fileID: 1691807920347239065}
   - component: {fileID: 1062891824874759695}
-  m_Layer: 9
+  - component: {fileID: 6572419030802791292}
+  m_Layer: 10
   m_Name: EnemyShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +85,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82da32b79e770c540b02c9e790f4c275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
   StartPoint: {fileID: 8262174214181469970}
   EndPoint: {x: 0, y: 0, z: 0}
   NewDirectionInterval: 1
@@ -151,3 +151,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6572419030802791292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8262174214181469997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2f7b3398511694d94060ae166bf453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  misileData: {fileID: 11400000, guid: 2b1142e89e17aba46a300e51d7ab3df0, type: 2}
+  PoolManager: {fileID: 0}

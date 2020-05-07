@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class FireEnemyMisile : MonoBehaviour
 {
+    public MisileData misileData;
+    public PoolManager PoolManager;
+    public bool enable = true;
+
+    public Vector3 aim;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +24,10 @@ public class FireEnemyMisile : MonoBehaviour
 
     public void Fire()
     {
+
+
+        if(enable)
+            PoolManager.MisilePool.pool.Add(new MisileData(misileData, transform.position,(aim - transform.position),MisileData.Type.Enemy));
 
     }
 }

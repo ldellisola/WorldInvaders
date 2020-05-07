@@ -8,7 +8,7 @@ public class EnemyGenerator : MonoBehaviour
     public List<BaseEnemyData> Enemies;
 
     private int i = 0;
-    private List<Vector2> initPos = new List<Vector2>{new Vector2(-5,9),new Vector2(5,9), new Vector2(-5,-9)};
+    private List<Vector2> initPos = new List<Vector2>{new Vector2(0,-9),new Vector2(5,9), new Vector2(-5,-9)};
 
     // Start is called before the first frame update
     void Start()

@@ -5,11 +5,12 @@ using UnityEngine;
 public class FireMisile: MonoBehaviour
 {
     public Transform MisileStartPosition;
-
     public PoolManager PoolManager;
-
     public float ShootingMovementThreshold = 0.001f;
     public float ShootingUpdateTime = 1f;
+    public MisileData misileData;
+
+    public bool enable = true;
 
     private Vector3 LastPosition;
     private bool isMoving = false;
@@ -49,8 +50,9 @@ public class FireMisile: MonoBehaviour
 
     private void Fire()
     {
-
-        PoolManager.MisilePool.pool.Add(new Misile.Data(MisileStartPosition.position));
+        if(enable)
+            PoolManager.MisilePool.pool.Add(new MisileData(misileData, MisileStartPosition.position,
+                MisileStartPosition.position,MisileData.Type.Player));
 
     }
 }

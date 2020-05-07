@@ -11,11 +11,11 @@ public enum EnemyMovementStyle
     PursuitAndEvade
 }
 
-[CreateAssetMenu(menuName = "EnemyData/Enemy",order = 1)]
+[CreateAssetMenu(menuName = "EnemyData",order = 1)]
 public class BaseEnemyData : ScriptableObject
 {
     public Vector2 initialPositon;
-    public BaseEnemyMisileData misile;
+    public MisileData misile;
     public float velocity;
     public EnemyMovementStyle movementStyle;
     public Sprite sprite;

@@ -24,6 +24,10 @@ namespace Assets.Scripts.Enemies.MovementStyle
                             data.velocity,2 * data.velocity,data.mass));
         }
 
+        public void DrawGizmos(BaseEnemyData data, MonoBehaviour enemy)
+        {
+        }
+
 
         public Vector3 Update(Vector2 target, Vector2 position, Vector2 currentDirection, float speed,float maxSpeed, float mass)
         {

@@ -48,7 +48,22 @@ namespace Assets.Scripts.Enemies.MovementStyle
             }
         }
 
-        
+        public void DrawGizmos(BaseEnemyData data, MonoBehaviour enemy)
+        {
+            Color oldColor = Gizmos.color;
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawWireSphere(Vector3.zero, outerRadius);
+
+            Gizmos.color = Color.yellow;
+
+            Gizmos.DrawWireSphere(Vector3.zero, innerRadius);
+
+            Gizmos.color = oldColor;
+
+            w.DrawGizmos(data,enemy);
+        }
+
 
         private State SwitchState(BaseEnemyData data, MonoBehaviour enemy)
         {
@@ -63,7 +78,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
                     {
                         newState = State.Diving;
                         timeSinceStartedState = 0;
-                        Debug.Log("DIVING");
                     }
 
                     // Implement timer
@@ -72,7 +86,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
                     if ((enemy.transform.position - target).sqrMagnitude <= innerRadius * innerRadius)
                     {
                         newState = State.Shooting;
-                        Debug.Log("SHOOTING");
 
                     }
 
@@ -85,7 +98,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
                         retreatTarget = CalculateRetreateTarget(enemy.transform);
                         timeSinceStartedState = 0;
-                        Debug.Log("RETIEVING");
 
                     }
 
@@ -94,7 +106,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
                     if ((enemy.transform.position - target).sqrMagnitude > Mathf.Pow(outerRadius + Random.value * 2, 2))
                     {
                         newState = State.Wondwering;
-                        Debug.Log("WONDERING");
 
                     }
 
@@ -115,30 +126,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
             newVec.y = -newVec.y;
             return 4 * newVec;
-
-
-            //if (enemy.forward.x >= 0 && enemy.forward.y >= 0)
-            //{
-            //    newVec.x = enemy.forward.x;
-            //    newVec.y = -enemy.forward.y;
-            //}
-            //else if (enemy.forward.x >= 0 && enemy.forward.y < 0)
-            //{
-            //    newVec.x = enemy.forward.x;
-            //    newVec.y = -enemy.forward.y;
-            //}
-            //else if (enemy.forward.x < 0 && enemy.forward.y >= 0)
-            //{
-            //    newVec.x = enemy.forward.x;
-            //    newVec.y = -enemy.forward.y;
-            //}
-            //else// (enemy.forward.x < 0 && enemy.forward.y < 0)
-            //{
-            //    newVec.x = enemy.forward.x;
-            //    newVec.y = -enemy.forward.y;
-            //}
-
-
         }
 
         private void Wander(BaseEnemyData data, MonoBehaviour enemy)
@@ -160,7 +147,7 @@ namespace Assets.Scripts.Enemies.MovementStyle
         {
             if (!hasShooted && timeSinceStartedState > TimeToShoot)
             {
-               // enemy.GetComponent<FireEnemyMisile>().Fire();
+                enemy.GetComponent<FireEnemyMisile>().Fire();
                 hasShooted = true;
             }
         }

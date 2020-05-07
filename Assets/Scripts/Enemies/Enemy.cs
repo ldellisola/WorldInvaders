@@ -59,15 +59,24 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
 
     }
 
+    public void OnDrawGizmos()
+    {
+        movement.DrawGizmos(data,this);
+    }
 
 
     void OnTriggerEnter2D(Collider2D obj)
     {
-        print("Colision Nave");
 
-       // pools.EnemyPool.explosionPool.Add(new EnemyExplosion.Data(this.transform.position));
+        if (obj.gameObject.TryGetComponent(out Misile misile))
+        {
+            if (misile.Data.Shooter == MisileData.Type.Player)
+            {
+                this.gameObject.SetActive(false);
+                pools.EnemyPool.explosionPool.Add(new EnemyExplosion.Data(this.transform.position));
 
-       // this.gameObject.SetActive(false);
+            }
+        }
     }
     
 }

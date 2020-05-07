@@ -2,43 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Misile : MonoBehaviour, IPooledObject<Misile.Data>
+public class Misile : MonoBehaviour, IPooledObject<MisileData>
 {
-
-    public class Data
-    {
-        public Vector2 pos;
-
-        public Data(Vector2 pos)
-        {
-            this.pos = pos;
-        }
-    }
-
+    
     public Rigidbody2D Body;
-    public float speed;
-    public float maxLifeTime;
-    private float lifetime = 0;
-
-    public float Radius => GetComponent<CircleCollider2D>().radius / 100;
-
-
-    public float ExplosionRadius { get; private set; } = 0.2f;
-
     public PoolManager PoolManager;
 
 
-    public void Initialize(Data data)
+    public MisileData Data { get; private set; }
+
+
+    public float speed => Data.speed;
+    public float maxLifeTime => Data.timeAlive;
+    public float maxTravelDistance => Data.range;
+    public float damage => Data.damage;
+    public float Radius => GetComponent<CircleCollider2D>().radius / 100;
+    public float ExplosionRadius => damage / 100;
+
+
+    private float lifetime = 0;
+    
+    public void Initialize(MisileData data)
     {
-        this.transform.position = data.pos;
+        this.transform.position = data.position;
+        this.Data = data;
         lifetime = 0;
-        Body.AddForce(transform.position * speed , ForceMode2D.Force);
+        Body.AddForce(data.direction * speed , ForceMode2D.Force);
+
+        GetComponent<SpriteRenderer>().sprite = data.sprite;
     }
 
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -47,7 +41,7 @@ public class Misile : MonoBehaviour, IPooledObject<Misile.Data>
 
         // Preguntar por que desaparece
 
-        if (lifetime >= maxLifeTime)
+        if (lifetime >= maxLifeTime || (transform.position - Data.position).sqrMagnitude > maxTravelDistance*maxTravelDistance)
         {
             PoolManager.MisilePool.ExplosionsPool.Add(new MisileExplosion.Data(this.transform.position));
             gameObject.SetActive(false);
