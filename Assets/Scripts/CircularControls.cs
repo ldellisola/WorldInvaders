@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CircularControls : MonoBehaviour
 {
@@ -8,6 +6,7 @@ public class CircularControls : MonoBehaviour
     public float RotateawaySpeed = 2f;
     public float Radius = 2.4f;
 
+    public bool touchControls = false;
     private float Width => GetComponent<BoxCollider2D>().size.x;
 
 
@@ -16,30 +15,59 @@ public class CircularControls : MonoBehaviour
     private float _angle;
 
 
+
+
     private void Start()
     {
-        
+
     }
 
     private void Update()
     {
-
-        if (Input.GetKey(KeyCode.RightArrow) && CanMoveRight())
+        if (touchControls)
         {
-            _angle += RotateSpeed * Time.deltaTime;
+            if (Input.touchCount > 0)
+            {
+                var touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    if (touch.deltaPosition.x > 0 && CanMoveRight())
+                    {
 
-            var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
-            transform.position = _centre.transform.position + offset;
+                        _angle += touch.deltaPosition.x/1000;
+                        var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+                        transform.position = _centre.transform.position + offset;
+                    }
+                    else if(touch.deltaPosition.x < 0 && CanMoveLeft())
+                    {
+                        _angle += touch.deltaPosition.x/1000;
+                        var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+                        transform.position = _centre.transform.position + offset;
+                    }
+                }
+            }
         }
-        else if(Input.GetKey(KeyCode.LeftArrow) && CanMoveLeft())
+        else
         {
-            _angle -= RotateSpeed * Time.deltaTime;
-            var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
-            transform.position = _centre.transform.position + offset;
+            if (Input.GetKey(KeyCode.RightArrow) && CanMoveRight())
+            {
+                _angle += RotateSpeed * Time.deltaTime;
+
+                var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+                transform.position = _centre.transform.position + offset;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow) && CanMoveLeft())
+            {
+                _angle -= RotateSpeed * Time.deltaTime;
+                var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+                transform.position = _centre.transform.position + offset;
+            }
         }
 
 
-        Vector2 direction = transform.position- _centre.transform.position;
+
+
+        Vector2 direction = transform.position - _centre.transform.position;
 
         float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
 
@@ -71,7 +99,7 @@ public class CircularControls : MonoBehaviour
         var hit = Physics2D.Raycast(a, direction, size, LayerMask.GetMask("World Border"));
 
 
-        Debug.DrawRay(a, direction * size, Color.red,10);
+        Debug.DrawRay(a, direction * size, Color.red, 10);
 
         return hit.collider == null;
     }
