@@ -21,8 +21,8 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
         private Wander w =new Wander();
 
-        private const float outerRadius = 8;
-        private const float innerRadius = 4;
+        private const float outerRadius = 14;
+        private const float innerRadius = 8;
         private const float TimeToShoot = 0.5f;
         private const float VelMultiplier = 1;
         private const float MassMultiplier = 1;
