@@ -1186,6 +1186,7 @@ MonoBehaviour:
   RotateSpeed: 2
   RotateawaySpeed: 100
   Radius: 8
+  touchControls: 1
   rotation: {x: 0, y: 0}
   _centre: {fileID: 1265321647}
 --- !u!114 &1459154546

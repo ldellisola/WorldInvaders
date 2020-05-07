@@ -34,13 +34,13 @@ public class CircularControls : MonoBehaviour
                     if (touch.deltaPosition.x > 0 && CanMoveRight())
                     {
 
-                        _angle += RotateSpeed * Time.deltaTime;
+                        _angle += touch.deltaPosition.x/1000;
                         var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
                         transform.position = _centre.transform.position + offset;
                     }
                     else if(touch.deltaPosition.x < 0 && CanMoveLeft())
                     {
-                        _angle -= RotateSpeed * Time.deltaTime;
+                        _angle += touch.deltaPosition.x/1000;
                         var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
                         transform.position = _centre.transform.position + offset;
                     }
