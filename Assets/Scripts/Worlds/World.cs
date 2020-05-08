@@ -15,11 +15,21 @@ public class World : MonoBehaviour
     {
         var sp = GetComponent<SpriteRenderer>();
         sp.sprite = Data.sprite;
+        currentLife = MaxLife;
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
+        if (collider.TryGetComponent(out Misile mis) && mis.Data.Shooter == MisileData.Type.Enemy)
+        {
+            currentLife -= mis.damage;
+            
+        }
+    }
 
+    public void Update()
+    {
+        // Hacer algo cuando la vida llega a 0
     }
    
 }

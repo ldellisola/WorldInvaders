@@ -9,13 +9,23 @@ public class MisilePool : MonoBehaviour
 
     public GameObject ExplosionPrefab;
 
-    public ObjectPool<Misile, MisileData> pool;
-    public ObjectPool<MisileExplosion, MisileExplosion.Data> ExplosionsPool;
+    private ObjectPool<Misile, MisileData> pool;
+    private ObjectPool<MisileExplosion, MisileExplosion.Data> ExplosionsPool;
 
 
     public void Awake()
     {
         pool = new ObjectPool<Misile, MisileData>(MisilePoolTransform,misilePrefab);
         ExplosionsPool = new ObjectPool<MisileExplosion, MisileExplosion.Data>(MisilePoolTransform, ExplosionPrefab);
+    }
+
+    public void Add(MisileData data)
+    {
+        pool.Add(data).transform.parent = this.transform;
+    }
+
+    public void Add(MisileExplosion.Data data)
+    {
+        ExplosionsPool.Add(data).transform.parent = this.transform;
     }
 }

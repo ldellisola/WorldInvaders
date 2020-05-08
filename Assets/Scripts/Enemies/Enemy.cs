@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Enemies.MovementStyle;
 using UnityEngine;
@@ -69,6 +70,12 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
             InZone = isInZone();
         }
 
+        if (life <= 0)
+        {
+            this.gameObject.SetActive(false);
+            pools.EnemyPool.Add(new EnemyExplosion.Data(this.transform.position));
+        }
+
 
     }
 
@@ -131,12 +138,14 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
     void OnTriggerEnter2D(Collider2D obj)
     {
 
-        if (obj.gameObject.TryGetComponent(out Misile misile))
+        if (obj.gameObject.TryGetComponent(out Misile misile) && InZone)
         {
             if (misile.Data.Shooter == MisileData.Type.Player)
             {
-                this.gameObject.SetActive(false);
-                pools.EnemyPool.explosionPool.Add(new EnemyExplosion.Data(this.transform.position));
+                life -= misile.damage;
+                Debug.Log(String.Format("Le saco {0} de vida. Le queda {1}", misile.damage,life));
+
+                misile.Explode();
 
             }
         }
