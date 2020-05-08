@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c012ee36e5cb3445b36e316101ef0a4, type: 3}
   m_Name: FastEnemy
   m_EditorClassIdentifier: 
-  initialPositon: {x: -5, y: -9}
-  misile: {fileID: 11400000, guid: d132036373b3efd43a8ae7fd6c2382a9, type: 2}
-  velocity: 2
+  initialPositon: {x: -13.501875, y: 24.679874}
+  misile: {fileID: 0}
+  velocity: 0.5
   movementStyle: 0
   sprite: {fileID: 21300000, guid: a8b9579cc05ec924b8db3e8422459a0b, type: 3}
-  life: 50
+  life: 10
   mass: 6
   spawnInterval: 10

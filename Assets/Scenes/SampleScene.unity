@@ -167,6 +167,8 @@ MonoBehaviour:
   Pools: {fileID: 793462857}
   Enemies:
   - {fileID: 11400000, guid: 34ef105c7a5300c4c8736cc19d5a8712, type: 2}
+  - {fileID: 11400000, guid: b226276a3d88ff74e852ff5bb7af043c, type: 2}
+  - {fileID: 11400000, guid: ba1de4fcc833d52478792faeeee74514, type: 2}
   outerRim: 10
 --- !u!1 &59118547
 GameObject:
