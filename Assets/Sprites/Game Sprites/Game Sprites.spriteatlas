@@ -31,7 +31,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 6de135724dc88b24a9d53f7761b2ef6a, type: 3}
-    totalSpriteSurfaceArea: 526830
+    totalSpriteSurfaceArea: 341930
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -50,7 +50,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
   - {fileID: 21300002, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
   - {fileID: 21300004, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
-  - {fileID: 21300000, guid: 083f9715035f86240bcaf11a5d7f5ce9, type: 3}
   - {fileID: 21300000, guid: 36da0b7bdceee7a48851d5dd2aefe98f, type: 3}
   - {fileID: 21300000, guid: 8ff5851d96e353540b1e6d34f6dafe7b, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -69,7 +68,6 @@ SpriteAtlas:
   - BulletBombSpriteSheetBlue_0
   - BulletBombSpriteSheetBlue_1
   - BulletBombSpriteSheetBlue_2
-  - Shield
   - idle_orb_blue
   - blue-planet
   m_Tag: Game Sprites
