@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.UI.DataModels;
+using Assets.Scripts.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
@@ -19,6 +21,13 @@ namespace Assets.Scripts.UI
             transform.Find("LevelName").GetComponentInChildren<TextMeshProUGUI>().text = data.Name;
             
             this.gameObject.SetActive(true);
+        }
+
+        public void ButtonClick_SelectLevel()
+        {
+            LocalStorage.SetObject("levelData",data.GenerateSharedData());
+            GetComponentInParent<BasePanel>().ClosePanel();
+            SceneManager.LoadScene(sceneName: "SampleLevel");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.UI.DataModels;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
@@ -8,6 +9,7 @@ namespace Assets.Scripts.UI
     public class LevelSelectorController : MonoBehaviour
     {
         public BasePanel LevelSelectorPanel;
+        public BasePanel MainMenuPanel;
         public List<LevelData> levels;
 
         public void Start()
@@ -26,9 +28,13 @@ namespace Assets.Scripts.UI
             };
         }
 
-        public void ButtonClick_SelectLevel()
+        public void ButtonClick_GoBack()
         {
+            LevelSelectorPanel.ClosePanel();
+            MainMenuPanel.OpenPanel();
 
         }
+
+
     }
 }

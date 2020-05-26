@@ -7,6 +7,7 @@ namespace Assets.Scripts.UI
 
         public BasePanel LevelSelectorPanel;
         public BasePanel MainMenuPanel;
+        public BasePanel SettingsPanel;
 
 
 
@@ -14,6 +15,12 @@ namespace Assets.Scripts.UI
         public void ButtonClick_Play()
         {
             LevelSelectorPanel.OpenPanel();
+            MainMenuPanel.ClosePanel();
+        }
+
+        public void ButtonClick_Settings()
+        {
+            SettingsPanel.OpenPanel();
             MainMenuPanel.ClosePanel();
         }
     }

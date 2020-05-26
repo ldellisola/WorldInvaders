@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.SharedDataModels;
+using Assets.Scripts.UI.DataModels;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 public class EnemyGenerator : MonoBehaviour
@@ -11,13 +14,13 @@ public class EnemyGenerator : MonoBehaviour
     private int i = 0;
     private List<Vector2> initPos = new List<Vector2>();
 
-    // Start is called before the first frame update
     void Start()
     {
-        //Enemies.ForEach(t=>t.Initialize(initPos[i++]));
+        var levelData = LocalStorage.GetObject<SharedLevelData>("LevelData");
+
+        Enemies = levelData.Enemies;
     }
 
-    // Update is called once per frame
     void Update()
     {
             Enemies.ForEach(t =>

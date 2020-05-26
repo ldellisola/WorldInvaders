@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.SharedDataModels;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,6 +14,19 @@ namespace Assets.Scripts.UI.DataModels
 
         public List<BaseEnemyData> Enemies;
         public float WorldLife;
+
+
+        public SharedLevelData GenerateSharedData()
+        {
+            return new SharedLevelData
+            {
+                Name = Name,
+                Enemies = Enemies,
+                WorldLife = WorldLife,
+                WorldSprite = WorldSprite
+            };
+        }
+
 
     }
 }
