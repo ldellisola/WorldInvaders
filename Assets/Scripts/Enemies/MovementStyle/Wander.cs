@@ -80,7 +80,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
                 if (hit.collider != null)
                 {
-                    Debug.Log(hit.collider.gameObject.name);
                     Debug.DrawRay(a, Vector2.left, Color.cyan, 10);
 
                     hit = Physics2D.Raycast(a, Vector2.left, maxDistance, LayerMask.GetMask("World Border"));
@@ -95,7 +94,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
                 if (hit.collider != null)
                 {
-                    Debug.Log(hit.collider.gameObject.name);
                     Debug.DrawRay(a, Vector2.right, Color.cyan, 10);
 
                     hit = Physics2D.Raycast(a, Vector2.right, maxDistance, LayerMask.GetMask("World Border"));
@@ -110,7 +108,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
                 if (hit.collider != null)
                 {
-                    Debug.Log(hit.collider.gameObject.name);
                     Debug.DrawRay(a, Vector2.up, Color.cyan, 10);
 
                     hit = Physics2D.Raycast(a, Vector2.up, maxDistance, LayerMask.GetMask("World Border"));
@@ -125,7 +122,6 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
                 if (hit.collider != null)
                 {
-                    Debug.Log(hit.collider.gameObject.name);
                     Debug.DrawRay(a, Vector2.down, Color.cyan, 10);
 
                     hit = Physics2D.Raycast(a, Vector2.down, maxDistance, LayerMask.GetMask("World Border"));
@@ -140,29 +136,7 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
 
             } while (hit.collider != null);
-
-            if (hit.collider != null)
-            {
-                Wander wew = null;
-                wew.Update(null, null);
-            }
-
-            //Debug.DrawRay(a,a + new Vector3(1,0), Color.red, 10);
-            //Debug.DrawRay(a,a + new Vector3(1,1), Color.red, 10);
-            //Debug.DrawRay(a,a + new Vector3(0,1), Color.red, 10);
-            //Debug.DrawRay(a,a + new Vector3(1.5f,0), Color.red, 10);
-            //Debug.DrawRay(a,a + new Vector3(1.5f,1), Color.red,10);
-
-            //Debug.DrawRay(position, position + new Vector3(1, 0), Color.green, 10);
-            //Debug.DrawRay(position, position + new Vector3(1, 1), Color.green, 10);
-            //Debug.DrawRay(position, position + new Vector3(0, 1), Color.green, 10);
-            //Debug.DrawRay(position, position + new Vector3(1.5f, 0), Color.green, 10);
-            //Debug.DrawRay(position, position + new Vector3(1.5f, 1), Color.green, 10);
-
-
-            //Debug.DrawRay(position, a - position, Color.white, 10);
-
-
+            
 
             return a;
         }

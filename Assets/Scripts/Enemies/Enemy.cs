@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Enemies.MovementStyle;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
 {
     public PoolManager pools;
 
+    public float CollisionDamage => data.velocity * data.mass;
 
     public BaseEnemyData data {get; private set; }
     private SpriteRenderer sp;
@@ -69,6 +71,11 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
             InZone = isInZone();
         }
 
+        if (life <= 0)
+        {
+            Explode();
+        }
+
 
     }
 
@@ -76,46 +83,18 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
     {
         float distance = 30;
 
-        var hit = Physics2D.Raycast(transform.position, Vector2.left, distance, LayerMask.GetMask("World Border"));
-        //Debug.DrawRay(transform.position, Vector2.left *distance , Color.magenta, 10);
-
-        if (hit.collider == null || hit.collider.gameObject.name != "Left Wall")
+        Tuple<Vector2, string>[] directions =
         {
+            Tuple.Create(Vector2.left, "Left Wall"), Tuple.Create(Vector2.right, "Right Wall"), Tuple.Create(Vector2.up, "Top Wall"),
+            Tuple.Create(Vector2.down, "Bottom Wall")
+        };
 
-            return false;
-        }
-
-
-
-        hit = Physics2D.Raycast(transform.position, Vector2.right, distance, LayerMask.GetMask("World Border"));
-        //Debug.DrawRay(transform.position, Vector2.right * distance, Color.magenta, 10);
-
-        if (hit.collider == null || hit.collider.gameObject.name != "Right Wall")
+        foreach (var direction in directions)
         {
+            var hit = Physics2D.Raycast(transform.position, direction.Item1, distance, LayerMask.GetMask("World Border"));
 
-            return false;
-        }
-
-
-
-        hit = Physics2D.Raycast(transform.position, Vector2.up, distance, LayerMask.GetMask("World Border"));
-        //Debug.DrawRay(transform.position, Vector2.up * distance, Color.magenta, 10);
-
-        if (hit.collider == null || hit.collider.gameObject.name != "Top Wall")
-        {
-
-            return false;
-        }
-
-
-
-        hit = Physics2D.Raycast(transform.position, Vector2.down, distance, LayerMask.GetMask("World Border"));
-        //Debug.DrawRay(transform.position, Vector2.down * distance, Color.magenta, 10);
-
-        if (hit.collider == null || hit.collider.gameObject.name != "Bottom Wall")
-        {
-
-            return false;
+            if (hit.collider == null || hit.collider.gameObject.name != direction.Item2)
+                return false;
         }
 
 
@@ -131,15 +110,22 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
     void OnTriggerEnter2D(Collider2D obj)
     {
 
-        if (obj.gameObject.TryGetComponent(out Misile misile))
+        if (obj.gameObject.TryGetComponent(out Misile misile) && InZone)
         {
             if (misile.Data.Shooter == MisileData.Type.Player)
             {
-                this.gameObject.SetActive(false);
-                pools.EnemyPool.explosionPool.Add(new EnemyExplosion.Data(this.transform.position));
+                life -= misile.damage;
+                Debug.Log(String.Format("Le saco {0} de vida. Le queda {1}", misile.damage,life));
+
+                misile.Explode();
 
             }
         }
     }
-    
+
+    public void Explode()
+    {
+        this.gameObject.SetActive(false);
+        pools.EnemyPool.Add(new EnemyExplosion.Data(this.transform.position));
+    }
 }

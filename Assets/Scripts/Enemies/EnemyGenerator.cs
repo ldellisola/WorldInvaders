@@ -27,7 +27,7 @@ public class EnemyGenerator : MonoBehaviour
                 {
                     t.initialPositon = CalculatePosition();
                     initPos.Add(t.initialPositon);
-                    Pools.EnemyPool.pool.Add(t);
+                    Pools.EnemyPool.Add(t);
                 }
             });
 
