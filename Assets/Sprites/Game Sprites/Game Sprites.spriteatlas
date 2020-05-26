@@ -47,6 +47,7 @@ SpriteAtlas:
   - {fileID: -3690502768834906923, guid: 907a19a0cc99bf04288d3b0c0d6afcfb, type: 3}
   - {fileID: 3815954189206336483, guid: 907a19a0cc99bf04288d3b0c0d6afcfb, type: 3}
   - {fileID: 21300000, guid: 7b52acf0fd6dff8419cf32e5c13881f0, type: 3}
+  - {fileID: 21300000, guid: 3b75bb71da2b6b042b3f7f4ba7f013d7, type: 3}
   - {fileID: 21300000, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
   - {fileID: 21300002, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
   - {fileID: 21300004, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
@@ -65,6 +66,7 @@ SpriteAtlas:
   - Explosion_3
   - Explosion_2
   - idle_player_basic
+  - ShieldSPRT
   - BulletBombSpriteSheetBlue_0
   - BulletBombSpriteSheetBlue_1
   - BulletBombSpriteSheetBlue_2

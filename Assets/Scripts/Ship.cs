@@ -4,26 +4,42 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
+    private FireMisile cannons = null;
 
-    public GameObject BulletPrefab;
-    public Transform BulletStartPosition;
+    public float maxLife = 200;
+
+
+    private float life = 0;
+
+    public void Awake()
+    {
+        cannons = GetComponent<FireMisile>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        life = maxLife;
     }
 
+    void OnTriggerEnter2D(Collider2D obj)
+    {
+
+        if (obj.gameObject.TryGetComponent(out Misile misile))
+        {
+            if (misile.Data.Shooter == MisileData.Type.Enemy)
+            {
+
+                life -= misile.damage;
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            Fire();
+            cannons.Fire();
     }
 
-    public void Fire()
-    {
-        var Bullet = Instantiate(BulletPrefab) as GameObject;
-        Bullet.transform.position = BulletStartPosition.position;
-    }
+
 }

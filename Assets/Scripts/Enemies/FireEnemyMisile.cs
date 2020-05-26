@@ -27,7 +27,7 @@ public class FireEnemyMisile : MonoBehaviour
 
 
         if(enable)
-            PoolManager.MisilePool.pool.Add(new MisileData(misileData, transform.position,(aim - transform.position),MisileData.Type.Enemy));
+            PoolManager.MisilePool.Add(new MisileData(misileData, transform.position,(aim - transform.position),MisileData.Type.Enemy));
 
     }
 }

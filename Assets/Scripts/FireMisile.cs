@@ -48,10 +48,10 @@ public class FireMisile: MonoBehaviour
         //    Fire();
     }
 
-    private void Fire()
+    public void Fire()
     {
         if(enable)
-            PoolManager.MisilePool.pool.Add(new MisileData(misileData, MisileStartPosition.position,
+            PoolManager.MisilePool.Add(new MisileData(misileData, MisileStartPosition.position,
                 MisileStartPosition.position,MisileData.Type.Player));
 
     }

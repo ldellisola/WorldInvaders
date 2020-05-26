@@ -9,13 +9,23 @@ public class EnemyPool : MonoBehaviour
 
     public GameObject explosionPrefab;
 
-    public ObjectPool<Enemy, BaseEnemyData> pool;
-    public ObjectPool<EnemyExplosion, EnemyExplosion.Data> explosionPool;
+    private ObjectPool<Enemy, BaseEnemyData> pool;
+    private ObjectPool<EnemyExplosion, EnemyExplosion.Data> explosionPool;
 
 
     public void Awake()
     {
         pool = new ObjectPool<Enemy, BaseEnemyData>(enemyPoolTransform, enemyPrefab);
         explosionPool = new ObjectPool<EnemyExplosion, EnemyExplosion.Data>(enemyPoolTransform, explosionPrefab);
+    }
+
+    public void Add(BaseEnemyData data)
+    {
+        pool.Add(data).transform.parent = this.transform;
+    }
+
+    public void Add(EnemyExplosion.Data data)
+    {
+        explosionPool.Add(data).transform.parent = this.transform;
     }
 }

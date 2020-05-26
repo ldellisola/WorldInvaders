@@ -43,7 +43,7 @@ public class Misile : MonoBehaviour, IPooledObject<MisileData>
 
         if (lifetime >= maxLifeTime || (transform.position - Data.position).sqrMagnitude > maxTravelDistance*maxTravelDistance)
         {
-            PoolManager.MisilePool.ExplosionsPool.Add(new MisileExplosion.Data(this.transform.position));
+            PoolManager.MisilePool.Add(new MisileExplosion.Data(this.transform.position));
             gameObject.SetActive(false);
         }
     }
@@ -51,16 +51,23 @@ public class Misile : MonoBehaviour, IPooledObject<MisileData>
 
 
 
-    //void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    print("Colision");
-        
-    //}
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent(out Misile mis))
+        {
+            if (mis.Data.Shooter != this.Data.Shooter)
+            {
+                Explode();
+                gameObject.SetActive(false);
+            }
+        }
+
+    }
 
 
     public void Explode()
     {
-        PoolManager.MisilePool.ExplosionsPool.Add(new MisileExplosion.Data(this.transform.position));
+        PoolManager.MisilePool.Add(new MisileExplosion.Data(this.transform.position));
 
         this.gameObject.SetActive(false);
     }
