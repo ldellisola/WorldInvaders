@@ -11,7 +11,7 @@ public class World : MonoBehaviour
 
     private float MaxLife => Data.life;
 
-    private float currentLife = 0;
+    public float Life { get; private set; } = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -23,20 +23,20 @@ public class World : MonoBehaviour
 
         var sp = GetComponent<SpriteRenderer>();
         sp.sprite = Data.sprite;
-        currentLife = MaxLife;
+        Life = MaxLife;
     }
 
     public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.TryGetComponent(out Misile mis) && mis.Data.Shooter == MisileData.Type.Enemy)
         {
-            currentLife -= mis.damage;
+            Life -= mis.damage;
             mis.Explode();
         }
 
         if (collider.TryGetComponent(out Enemy enemy))
         {
-            currentLife -= enemy.CollisionDamage;
+            Life -= enemy.CollisionDamage;
             enemy.Explode();
         }
     }

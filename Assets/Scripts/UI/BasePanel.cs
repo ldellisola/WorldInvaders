@@ -14,7 +14,7 @@ namespace Assets.Scripts.UI
         public Action<GameObject> onClose { private get; set; } = t => { };
 
         public float initialAlpha;
-
+        public float FadeTime = 0.2f;
         private CanvasGroup canvasGroup;
 
         public void Awake()
@@ -31,9 +31,9 @@ namespace Assets.Scripts.UI
         {
             this.gameObject.SetActive(true);
             canvasGroup.interactable = true;
-            LeanTween.alphaCanvas(this.canvasGroup, 1, 1);
+            LeanTween.alphaCanvas(this.canvasGroup, 1, FadeTime).setOnComplete(t => { onOpen.Invoke(gameObject);});
             //LeanTween.alpha(this.gameObject, 1, 1).setOnStart(()=> this.gameObject.SetActive(true));
-            onOpen.Invoke(gameObject);
+            // onOpen.Invoke(gameObject);
         }
 
 
@@ -41,9 +41,11 @@ namespace Assets.Scripts.UI
         {
             canvasGroup.interactable = false;
 
-            LeanTween.alphaCanvas(this.canvasGroup, 0, 1).setOnComplete((t)=> this.gameObject.SetActive(false));
-
             onClose.Invoke(gameObject);
+
+            LeanTween.alphaCanvas(this.canvasGroup, 0, FadeTime).setOnComplete((t)=> this.gameObject.SetActive(false));
+
+            // onClose.Invoke(gameObject);
 
         }
 

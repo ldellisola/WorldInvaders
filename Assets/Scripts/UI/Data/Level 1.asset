@@ -15,8 +15,5 @@ MonoBehaviour:
   WorldSprite: {fileID: 21300000, guid: 8ff5851d96e353540b1e6d34f6dafe7b, type: 3}
   Name: Level 1
   Enemies:
-  - {fileID: 11400000, guid: b226276a3d88ff74e852ff5bb7af043c, type: 2}
-  - {fileID: 11400000, guid: ba1de4fcc833d52478792faeeee74514, type: 2}
-  - {fileID: 11400000, guid: 34ef105c7a5300c4c8736cc19d5a8712, type: 2}
-  - {fileID: 11400000, guid: 34ef105c7a5300c4c8736cc19d5a8712, type: 2}
+  - {fileID: 11400000, guid: 9973185cae13dda48ba2dafc17ed9d6c, type: 2}
   WorldLife: 1000

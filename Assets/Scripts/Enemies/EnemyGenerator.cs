@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.SharedDataModels;
 using Assets.Scripts.UI.DataModels;
 using Assets.Scripts.Utils;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyGenerator : MonoBehaviour
 {
@@ -13,12 +16,17 @@ public class EnemyGenerator : MonoBehaviour
 
     private int i = 0;
     private List<Vector2> initPos = new List<Vector2>();
+    private int killedEnemies = 0;
 
     void Start()
     {
-        var levelData = LocalStorage.GetObject<SharedLevelData>("LevelData");
+        var levelData = LocalStorage.GetObject<SharedLevelData>("levelData");
 
         Enemies = levelData.Enemies;
+
+
+
+        
     }
 
     void Update()
@@ -29,7 +37,7 @@ public class EnemyGenerator : MonoBehaviour
                 if (t.HasToBeCreated())
                 {
                     t.initialPositon = CalculatePosition();
-                    initPos.Add(t.initialPositon);
+                    //initPos.Add(t.initialPositon);
                     Pools.EnemyPool.Add(t);
                 }
             });
@@ -43,6 +51,13 @@ public class EnemyGenerator : MonoBehaviour
             Gizmos.DrawSphere(t,0.5f);
         });
     }
+
+    public void NotifyEnemyKilled()
+    {
+        killedEnemies++;
+    }
+
+    public bool KiledAllEnemies() => killedEnemies >= Enemies.Sum(t => t.SpawnOrder.Count);
 
     private Vector2 CalculatePosition()
     {
@@ -58,4 +73,6 @@ public class EnemyGenerator : MonoBehaviour
 
         return pos * outerRim*3;
     }
+
+
 }

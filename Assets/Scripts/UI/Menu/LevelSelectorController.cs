@@ -14,18 +14,17 @@ namespace Assets.Scripts.UI
 
         public void Start()
         {
-            LevelSelectorPanel.onOpen = (go) =>
-            {
-                var temp = go.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-                temp.SetActive(false);
 
-                foreach (var level in levels)
-                {
-                    var newLevel = GameObject.Instantiate(temp, temp.transform.parent);
+            var temp = LevelSelectorPanel.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            temp.SetActive(false);
+
+            foreach (var level in levels)
+            {
+                var newLevel = GameObject.Instantiate(temp, temp.transform.parent);
                     
-                    newLevel.GetComponent<LevelButton>().Initialize(level);
-                }
-            };
+                newLevel.GetComponent<LevelButton>().Initialize(level);
+            }
+
         }
 
         public void ButtonClick_GoBack()
