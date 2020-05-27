@@ -15,7 +15,7 @@ namespace Assets.Scripts.UI
         public void Start()
         {
 
-            var temp = LevelSelectorPanel.gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+            var temp = LevelSelectorPanel.gameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject;
             temp.SetActive(false);
 
             foreach (var level in levels)

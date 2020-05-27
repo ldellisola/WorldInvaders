@@ -58,6 +58,7 @@ public class EnemyGenerator : MonoBehaviour
     }
 
     public bool KiledAllEnemies() => killedEnemies >= Enemies.Sum(t => t.SpawnOrder.Count);
+    public int EnemiesLeft() => Enemies.Sum(t => t.SpawnOrder.Count) - killedEnemies;
 
     private Vector2 CalculatePosition()
     {
