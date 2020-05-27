@@ -1,6 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.SharedDataModels;
+using Assets.Scripts.UI.DataModels;
+using Assets.Scripts.Utils;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyGenerator : MonoBehaviour
 {
@@ -10,14 +16,19 @@ public class EnemyGenerator : MonoBehaviour
 
     private int i = 0;
     private List<Vector2> initPos = new List<Vector2>();
+    private int killedEnemies = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
-        //Enemies.ForEach(t=>t.Initialize(initPos[i++]));
+        var levelData = LocalStorage.GetObject<SharedLevelData>("levelData");
+
+        Enemies = levelData.Enemies;
+
+
+
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
             Enemies.ForEach(t =>
@@ -26,7 +37,7 @@ public class EnemyGenerator : MonoBehaviour
                 if (t.HasToBeCreated())
                 {
                     t.initialPositon = CalculatePosition();
-                    initPos.Add(t.initialPositon);
+                    //initPos.Add(t.initialPositon);
                     Pools.EnemyPool.Add(t);
                 }
             });
@@ -40,6 +51,14 @@ public class EnemyGenerator : MonoBehaviour
             Gizmos.DrawSphere(t,0.5f);
         });
     }
+
+    public void NotifyEnemyKilled()
+    {
+        killedEnemies++;
+    }
+
+    public bool KiledAllEnemies() => killedEnemies >= Enemies.Sum(t => t.SpawnOrder.Count);
+    public int EnemiesLeft() => Enemies.Sum(t => t.SpawnOrder.Count) - killedEnemies;
 
     private Vector2 CalculatePosition()
     {
@@ -55,4 +74,6 @@ public class EnemyGenerator : MonoBehaviour
 
         return pos * outerRim*3;
     }
+
+
 }

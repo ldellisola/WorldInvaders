@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,8 +23,10 @@ public class BaseEnemyData : ScriptableObject
     public float life;
     public float mass;
 
-    public float spawnInterval;
-    private float timer = 0;
+    public List<float> SpawnOrder;
+    private int SpawnOrderIndex = 0;
+    private float timer { get; set; } = 0;
+
 
     public void Initialize(Vector2 pos)
     {
@@ -35,14 +38,19 @@ public class BaseEnemyData : ScriptableObject
         timer += time;
     }
 
+    public bool FinishedCreatingEnemies() => (SpawnOrderIndex >= SpawnOrder.Count);
+
+
     public bool HasToBeCreated()
     {
-        if (timer > spawnInterval)
+        if (SpawnOrderIndex >= SpawnOrder.Count)
+            return false;
+
+        if (timer > SpawnOrder[SpawnOrderIndex])
         {
-            timer -= spawnInterval;
+            SpawnOrderIndex++;
             return true;
         }
-
         return false;
     }
 

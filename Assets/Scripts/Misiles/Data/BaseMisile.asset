@@ -15,5 +15,5 @@ MonoBehaviour:
   sprite: {fileID: 21300004, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
   range: 20
   timeAlive: 15
-  speed: 10
+  speed: 20
   damage: 20

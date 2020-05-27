@@ -18,6 +18,10 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
 
     private Diver initalMovement = null;
 
+
+    public EnemyGenerator EnemyManager;
+
+
     public void Awake()
     {
         GameObject child = new GameObject("EnemySprite");
@@ -125,6 +129,7 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
 
     public void Explode()
     {
+        EnemyManager.NotifyEnemyKilled();
         this.gameObject.SetActive(false);
         pools.EnemyPool.Add(new EnemyExplosion.Data(this.transform.position));
     }

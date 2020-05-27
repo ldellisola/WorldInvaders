@@ -9,7 +9,7 @@ public class Ship : MonoBehaviour
     public float maxLife = 200;
 
 
-    private float life = 0;
+    public float life { get; private set; }
 
     public void Awake()
     {
