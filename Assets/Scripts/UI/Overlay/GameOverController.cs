@@ -29,12 +29,12 @@ public class GameOverController : MonoBehaviour
     public void ButtonClick_TryAgain()
     {
         gameOverPanel.ClosePanel();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
     }
 
     public void ButtonClick_MainMenu()
     {
-        SceneManager.LoadScene("MenuGUI");
+        SceneManager.LoadScene("MenuGUI",LoadSceneMode.Single);
 
     }
 }

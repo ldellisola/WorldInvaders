@@ -66,6 +66,7 @@ public class Enemy : MonoBehaviour, IPooledObject<BaseEnemyData>
 
     public void Update()
     {
+
         if(InZone)
             movement.Update(data,this);
         else
