@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WorldSprite: {fileID: 21300000, guid: 0aab17f474ae0434eb7aff4a29cc0123, type: 3}
   Name: Level 3
-  Enemies: []
-  WorldLife: 0
+  Enemies:
+  - {fileID: 11400000, guid: e60d88b2ded20ef428ef9288c6c8cbde, type: 2}
+  - {fileID: 11400000, guid: e4515b907af01274fa8b37c745fee7ee, type: 2}
+  WorldLife: 1000

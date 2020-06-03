@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffd300c626f2614287d4196a4052dd2, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: 
-  WorldSprite: {fileID: 21300000, guid: bc15c6ea9b0124465b164fd3e89c578d, type: 3}
+  WorldSprite: {fileID: 21300000, guid: 8d93f8b646fad08429a3686590a61bf7, type: 3}
   Name: Level 2
-  Enemies: []
-  WorldLife: 0
+  Enemies:
+  - {fileID: 11400000, guid: 09469d62eddd85a4594556d8c7f96e37, type: 2}
+  - {fileID: 11400000, guid: 8982f92ddc799eb40888a3ef3ea5b4ba, type: 2}
+  WorldLife: 1000

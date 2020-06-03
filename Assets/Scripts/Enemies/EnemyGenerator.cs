@@ -1,79 +1,83 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Pools;
 using Assets.Scripts.SharedDataModels;
-using Assets.Scripts.UI.DataModels;
+using Assets.Scripts.UI.Overlay;
 using Assets.Scripts.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyGenerator : MonoBehaviour
+namespace Assets.Scripts.Enemies
 {
-    public PoolManager Pools;
-    public List<BaseEnemyData> Enemies;
-    public float outerRim = 10;
-
-    private int i = 0;
-    private List<Vector2> initPos = new List<Vector2>();
-    private int killedEnemies = 0;
-
-    void Start()
+    public class EnemyGenerator : MonoBehaviour
     {
-        var levelData = LocalStorage.GetObject<SharedLevelData>("levelData");
+        public GameController GameController;
+        public PoolManager Pools;
+        public List<BaseEnemyData> Enemies;
+        public float outerRim = 10;
 
-        Enemies = levelData.Enemies;
+        private int i = 0;
+        private List<Vector2> initPos = new List<Vector2>();
+        private int killedEnemies = 0;
 
+        void Start()
+        {
+            var levelData = LocalStorage.GetObject<SharedLevelData>("levelData");
 
+            Enemies = levelData.Enemies;
 
-        
-    }
+            Enemies.ForEach(t => t.ResetTimer());
+        }
 
-    void Update()
-    {
-            Enemies.ForEach(t =>
+        void Update()
+        {
+            if (!GameController.IsGamePaused)
             {
-                t.AddTime(Time.deltaTime);
-                if (t.HasToBeCreated())
+                Enemies.ForEach(t =>
                 {
-                    t.initialPositon = CalculatePosition();
-                    //initPos.Add(t.initialPositon);
-                    Pools.EnemyPool.Add(t);
-                }
+                    t.AddTime(Time.deltaTime);
+                    if (t.HasToBeCreated())
+                    {
+                        t.initialPositon = CalculatePosition();
+                        //initPos.Add(t.initialPositon);
+                        Pools.EnemyPool.Add(t);
+                    }
+                });
+            }
+
+        }
+
+        public void OnDrawGizmos()
+        {
+            initPos.ForEach(t =>
+            {
+                Gizmos.DrawSphere(t,0.5f);
             });
+        }
 
-    }
-
-    public void OnDrawGizmos()
-    {
-        initPos.ForEach(t =>
+        public void NotifyEnemyKilled()
         {
-            Gizmos.DrawSphere(t,0.5f);
-        });
-    }
+            killedEnemies++;
+        }
 
-    public void NotifyEnemyKilled()
-    {
-        killedEnemies++;
-    }
+        public bool KiledAllEnemies() => killedEnemies >= Enemies.Sum(t => t.SpawnOrder.Count);
+        public int EnemiesLeft() => Enemies.Sum(t => t.SpawnOrder.Count) - killedEnemies;
 
-    public bool KiledAllEnemies() => killedEnemies >= Enemies.Sum(t => t.SpawnOrder.Count);
-    public int EnemiesLeft() => Enemies.Sum(t => t.SpawnOrder.Count) - killedEnemies;
-
-    private Vector2 CalculatePosition()
-    {
-        Vector2 pos;
-        do
+        private Vector2 CalculatePosition()
         {
-            pos = Random.onUnitSphere;
+            Vector2 pos;
+            do
+            {
+                pos = Random.onUnitSphere;
 
-            pos.y = Mathf.Abs(pos.y);
-        } while (pos.y < 0.5);
+                pos.y = Mathf.Abs(pos.y);
+            } while (pos.y < 0.5);
 
 
 
-        return pos * outerRim*3;
+            return pos * outerRim*3;
+        }
+
+
     }
-
-
 }

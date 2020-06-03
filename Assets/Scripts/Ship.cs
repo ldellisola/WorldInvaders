@@ -1,45 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Misiles;
+using Assets.Scripts.UI.Overlay;
 using UnityEngine;
 
-public class Ship : MonoBehaviour
+namespace Assets.Scripts
 {
-    private FireMisile cannons = null;
-
-    public float maxLife = 200;
-
-
-    public float life { get; private set; }
-
-    public void Awake()
+    public class Ship : MonoBehaviour
     {
-        cannons = GetComponent<FireMisile>();
-    }
+        private FireMisile cannons = null;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        life = maxLife;
-    }
 
-    void OnTriggerEnter2D(Collider2D obj)
-    {
+        public float maxLife = 200;
 
-        if (obj.gameObject.TryGetComponent(out Misile misile))
+
+        public float life { get; private set; }
+
+        public void Awake()
         {
-            if (misile.Data.Shooter == MisileData.Type.Enemy)
-            {
+            cannons = GetComponent<FireMisile>();
+        }
 
-                life -= misile.damage;
+        // Start is called before the first frame update
+        void Start()
+        {
+            life = maxLife;
+        }
+
+        void OnTriggerEnter2D(Collider2D obj)
+        {
+
+            if (obj.gameObject.TryGetComponent(out Misile misile))
+            {
+                if (misile.Data.Shooter == MisileData.Type.Enemy)
+                {
+
+                    life -= misile.damage;
+                    misile.Explode();
+                }
             }
         }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            cannons.Fire();
-    }
+        // Update is called once per frame
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                cannons.Fire();
+        }
 
 
+        public void ResetLife()
+        {
+            life = maxLife;
+        }
+
+
+    }
 }

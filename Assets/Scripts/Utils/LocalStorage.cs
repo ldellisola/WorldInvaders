@@ -18,6 +18,20 @@ namespace Assets.Scripts.Utils
             Save();
         }
 
+        public static void SetBool(string key,bool o)
+        {
+            SetInt(key, o ? 1 : 0);
+
+            Save();
+        }
+
+
+        public static bool GetBool(string key)
+        {
+            return GetInt(key, 0) == 1;
+        }
+
+
         public static T GetObject<T>(string key)
         {
             string value = GetString(key);

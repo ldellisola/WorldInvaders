@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Ads;
 using Assets.Scripts.UI.DataModels;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-namespace Assets.Scripts.UI
+namespace Assets.Scripts.UI.Menu
 {
     public class LevelSelectorController : MonoBehaviour
     {
         public BasePanel LevelSelectorPanel;
         public BasePanel MainMenuPanel;
         public List<LevelData> levels;
+        public AdManager AdManager;
 
         public void Start()
         {
-
+            AdManager.RequestBanner();
             var temp = LevelSelectorPanel.gameObject.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject;
             temp.SetActive(false);
 
@@ -24,6 +24,7 @@ namespace Assets.Scripts.UI
                     
                 newLevel.GetComponent<LevelButton>().Initialize(level);
             }
+            AdManager.RunBannerAd();
 
         }
 

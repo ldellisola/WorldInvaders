@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+namespace Assets.Scripts.Pools
 {
-    public MisilePool MisilePool;
-    public EnemyPool EnemyPool;
+    public class PoolManager : MonoBehaviour
+    {
+        public MisilePool MisilePool;
+        public EnemyPool EnemyPool;
+    }
 }

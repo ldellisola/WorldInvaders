@@ -1,31 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Enemies;
 using UnityEngine;
 
-public class EnemyPool : MonoBehaviour
+namespace Assets.Scripts.Pools
 {
-    public Transform enemyPoolTransform;
-    public GameObject enemyPrefab;
-
-    public GameObject explosionPrefab;
-
-    private ObjectPool<Enemy, BaseEnemyData> pool;
-    private ObjectPool<EnemyExplosion, EnemyExplosion.Data> explosionPool;
-
-
-    public void Awake()
+    public class EnemyPool : MonoBehaviour
     {
-        pool = new ObjectPool<Enemy, BaseEnemyData>(enemyPoolTransform, enemyPrefab);
-        explosionPool = new ObjectPool<EnemyExplosion, EnemyExplosion.Data>(enemyPoolTransform, explosionPrefab);
-    }
+        public Transform enemyPoolTransform;
+        public GameObject enemyPrefab;
 
-    public void Add(BaseEnemyData data)
-    {
-        pool.Add(data).transform.parent = this.transform;
-    }
+        public GameObject explosionPrefab;
 
-    public void Add(EnemyExplosion.Data data)
-    {
-        explosionPool.Add(data).transform.parent = this.transform;
+        private ObjectPool<Enemy, BaseEnemyData> pool;
+        private ObjectPool<EnemyExplosion, EnemyExplosion.Data> explosionPool;
+
+
+        public void Awake()
+        {
+            pool = new ObjectPool<Enemy, BaseEnemyData>(enemyPoolTransform, enemyPrefab);
+            explosionPool = new ObjectPool<EnemyExplosion, EnemyExplosion.Data>(enemyPoolTransform, explosionPrefab);
+        }
+
+        public void Add(BaseEnemyData data)
+        {
+            pool.Add(data).transform.parent = this.transform;
+        }
+
+        public void Add(EnemyExplosion.Data data)
+        {
+            explosionPool.Add(data).transform.parent = this.transform;
+        }
     }
 }

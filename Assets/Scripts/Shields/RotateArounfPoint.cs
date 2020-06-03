@@ -1,92 +1,87 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.UI.Overlay;
 using UnityEngine;
 
-public class RotateArounfPoint : MonoBehaviour
+namespace Assets.Scripts.Shields
 {
-    public float speed = 2f;
-
-    
-    private float Width => GetComponentInChildren<BoxCollider2D>().size.x;
-
-
-
-
-
-    private void Start()
+    public class RotateArounfPoint : MonoBehaviour
     {
+        public float speed = 2f;
 
-    }
+        public GameController GameController;
 
-    private void Update()
-    {
-        if (speed > 0 && !CanMoveRight())
+        private float Width => GetComponentInChildren<BoxCollider2D>().size.x;
+
+        private void Start()
         {
-            speed *= -1;
 
         }
-        
-        if (speed < 0 && !CanMoveLeft())
+
+        private void Update()
         {
-            speed *= -1;
+            if (!GameController.IsGamePaused)
+            {
+                if (speed > 0 && !CanMoveRight())
+                {
+                    speed *= -1;
+
+                }
+
+                if (speed < 0 && !CanMoveLeft())
+                {
+                    speed *= -1;
+                }
+
+                var offset = new Vector3(Time.deltaTime * speed, 0, 0);
+                this.transform.position += offset;
+
+                if (TryGetComponent<DestructibleTerrain>(out DestructibleTerrain terrain))
+                {
+                    MoveNodes(terrain.quadTree.GetRoot(), offset);
+                }
+
+            }
+
         }
 
-
-
-        var offset = new Vector3(Time.deltaTime * speed, 0, 0);
-        this.transform.position += offset;
-
-
-
-
-        if (TryGetComponent<DestructibleTerrain>(out DestructibleTerrain terrain))
+        private void MoveNodes(QuadTree<bool>.QuadTreeNode<bool> node, Vector2 diff)
         {
-            MoveNodes(terrain.quadTree.GetRoot(),offset);
+            node.Position += diff;
+
+            if (node.IsLeaf())
+            {
+                return;
+            }
+
+
+            foreach (var subnode in node.Nodes)
+            {
+                MoveNodes(subnode, diff);
+
+            }
         }
 
-
-
-
-    }
-
-    private void MoveNodes(QuadTree<bool>.QuadTreeNode<bool> node, Vector2 diff)
-    {
-        node.Position += diff;
-
-        if (node.IsLeaf())
+        private bool CanMoveRight()
         {
-            return;
+            return CanMove(Vector2.right, Width / 2);
+
         }
 
-
-        foreach (var subnode in node.Nodes)
+        private bool CanMoveLeft()
         {
-            MoveNodes(subnode,diff);
-
+            return CanMove(Vector2.left, Width / 2);
         }
-    }
 
-    private bool CanMoveRight()
-    {
-        return CanMove(Vector2.right,Width/2);
-
-    }
-
-    private bool CanMoveLeft()
-    {
-        return CanMove(Vector2.left, Width/2 );
-    }
-
-    private bool CanMove(Vector2 direction, float size)
-    {
-        Vector2 a = transform.position;
+        private bool CanMove(Vector2 direction, float size)
+        {
+            Vector2 a = transform.position;
 
 
-        var hit = Physics2D.Raycast(a, direction, size, LayerMask.GetMask("World Border"));
+            var hit = Physics2D.Raycast(a, direction, size, LayerMask.GetMask("World Border"));
 
 
-        Debug.DrawRay(a,direction * size  , Color.red);
+            Debug.DrawRay(a, direction * size, Color.red);
 
-        return hit.collider == null;
+            return hit.collider == null;
+        }
     }
 }

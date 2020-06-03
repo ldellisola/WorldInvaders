@@ -17,3 +17,4 @@ MonoBehaviour:
   timeAlive: 15
   speed: 20
   damage: 20
+  ShootingSound: {fileID: 8300000, guid: 1e0b539e245d51a40a306edad56abb7b, type: 3}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Misiles;
 using UnityEngine;
 
 
@@ -54,4 +55,9 @@ public class BaseEnemyData : ScriptableObject
         return false;
     }
 
+    public void ResetTimer()
+    {
+        timer = 0;
+        SpawnOrderIndex = 0;
+    }
 }
