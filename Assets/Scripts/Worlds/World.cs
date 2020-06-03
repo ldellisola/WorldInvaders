@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Enemies;
+using Assets.Scripts.Misiles;
 using Assets.Scripts.SharedDataModels;
 using Assets.Scripts.UI.DataModels;
 using Assets.Scripts.Utils;
@@ -45,5 +47,9 @@ public class World : MonoBehaviour
     {
         // Hacer algo cuando la vida llega a 0
     }
-   
+
+    public void ResetLife()
+    {
+        Life = MaxLife;
+    }
 }

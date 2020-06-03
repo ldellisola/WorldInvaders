@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Misiles;
+using Assets.Scripts.Pools;
+using Assets.Scripts.UI.Overlay;
 using UnityEngine;
 
 public class FireMisile: MonoBehaviour
@@ -9,6 +12,8 @@ public class FireMisile: MonoBehaviour
     public float ShootingMovementThreshold = 0.001f;
     public float ShootingUpdateTime = 1f;
     public MisileData misileData;
+    public GameController GameController;
+
 
     public bool enable = true;
 
@@ -25,27 +30,30 @@ public class FireMisile: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isMoving = (LastPosition - transform.position).sqrMagnitude > ShootingMovementThreshold;
-
-        LastPosition = transform.position;
-
-        if (!isMoving)
+        if (!GameController.IsGamePaused)
         {
-            timeCounter += Time.deltaTime;
+            isMoving = (LastPosition - transform.position).sqrMagnitude > ShootingMovementThreshold;
 
-            if (timeCounter >= ShootingUpdateTime)
+            LastPosition = transform.position;
+
+            if (!isMoving)
             {
-                timeCounter -= ShootingUpdateTime;
-                Fire();
-            }
-        }
-        else
-        {
-            timeCounter = 0;
-        }
+                timeCounter += Time.deltaTime;
 
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //    Fire();
+                if (timeCounter >= ShootingUpdateTime)
+                {
+                    timeCounter -= ShootingUpdateTime;
+                    Fire();
+                }
+            }
+            else
+            {
+                timeCounter = 0;
+            }
+
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //    Fire();
+        }
     }
 
     public void Fire()

@@ -1,35 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class EnemyExplosion : MonoBehaviour, IPooledObject<EnemyExplosion.Data>
+namespace Assets.Scripts.Enemies
 {
-    public class Data
+    public class EnemyExplosion : MonoBehaviour, IPooledObject<EnemyExplosion.Data>
     {
-        public Vector2 pos;
-
-        public Data(Vector2 pos)
+        public class Data
         {
-            this.pos = pos;
+            public Vector2 pos;
+
+            public Data(Vector2 pos)
+            {
+                this.pos = pos;
+            }
         }
-    }
 
-    public SpriteAnimator spriteAnimator;
+        public SpriteAnimator spriteAnimator;
 
-    public void Initialize(Data data)
-    {
-        this.transform.position = data.pos;
-        spriteAnimator.Play();
-    }
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!spriteAnimator.IsPlaying)
+        public void Initialize(Data data)
         {
-            this.gameObject.SetActive(false);
+            this.transform.position = data.pos;
+            spriteAnimator.Play();
+        }
+
+
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (!spriteAnimator.IsPlaying)
+            {
+                this.gameObject.SetActive(false);
+            }
         }
     }
 }

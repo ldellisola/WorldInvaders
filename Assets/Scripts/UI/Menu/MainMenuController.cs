@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Ads;
+using UnityEngine;
 
-namespace Assets.Scripts.UI
+namespace Assets.Scripts.UI.Menu
 {
     public class MainMenuController : MonoBehaviour
     {
@@ -9,8 +10,20 @@ namespace Assets.Scripts.UI
         public BasePanel MainMenuPanel;
         public BasePanel SettingsPanel;
 
+        public AdManager AdManager;
+        public PurchaseManager PurchaseManager;
 
+        public void Start()
+        {           
+            AdManager.RequestBanner();
+            AdManager.RunBannerAd();
+            // AdManager.RequestInterstitial();
+        }
 
+        public void Update()
+        {
+            
+        }
 
         public void ButtonClick_Play()
         {
@@ -22,6 +35,11 @@ namespace Assets.Scripts.UI
         {
             SettingsPanel.OpenPanel();
             MainMenuPanel.ClosePanel();
+        }
+
+        public void ButtonClick_BuyAds()
+        {
+            PurchaseManager.BuyNoAds();
         }
     }
 }

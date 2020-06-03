@@ -27,7 +27,7 @@ namespace Assets.Scripts.UI
         {
             LocalStorage.SetObject("levelData",data.GenerateSharedData());
             GetComponentInParent<BasePanel>().ClosePanel();
-            SceneManager.LoadScene(sceneName: "SampleLevel");
+            SceneManager.LoadScene(sceneName: "SampleLevel",LoadSceneMode.Single);
         }
     }
 }
