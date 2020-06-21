@@ -12,18 +12,13 @@ namespace Assets.Scripts.Ads
         public bool IsInitialized => StoreController != null;
 
         public static string NoAdsProduct = "no_ads";
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        public const string AppID = "com.StillDevelopingCo.WorldInvaders";
 
         private void Start() {
-#if UNITY_EDITOR || !UNITY_STANDALONE
+
             ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-            string packageStoreId = "com.lucas.worldInvaders.NoAds";
+            string packageStoreId = AppID + "." + NoAdsProduct;
             string storeName = GooglePlay.Name;
 
             builder.AddProduct(NoAdsProduct, ProductType.NonConsumable, new IDs() { { packageStoreId, storeName } });
@@ -32,7 +27,7 @@ namespace Assets.Scripts.Ads
             if (builder.products.Count != 0) {
                 UnityPurchasing.Initialize(this, builder);
             }
-#endif
+
         }
 
 
@@ -49,6 +44,7 @@ namespace Assets.Scripts.Ads
 
             if (product != null && product.availableToPurchase)
             {
+                AmplitudeManager.LogOnPurchaseStarted();
                 StoreController.InitiatePurchase(product);
             }
         }
@@ -70,6 +66,7 @@ namespace Assets.Scripts.Ads
             if (purchaseEvent.purchasedProduct.definition.id == NoAdsProduct)
             {
                 AdManager.DisableAds();
+                AmplitudeManager.LogOnPurchaseSucceeded();
             }
 
             ProductType productType = purchaseEvent.purchasedProduct.definition.type;
@@ -80,6 +77,7 @@ namespace Assets.Scripts.Ads
         public void OnPurchaseFailed(Product i, PurchaseFailureReason p)
         {
             // popup fallo la compra
+            AmplitudeManager.LogOnPurchaseFailed();
             Debug.LogError("ERROR");
 
         }

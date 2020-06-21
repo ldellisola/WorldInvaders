@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 namespace WakaTime {

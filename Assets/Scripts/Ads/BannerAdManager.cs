@@ -23,21 +23,30 @@ namespace Assets.Scripts.Ads
         {
             if (EnableAds)
             {
-#if UNITY_ANDROID
-                string adUnitId =
-                     "ca-app-pub-9853268330632359/7656821213"; // "ca-app-pub-3940256099942544/6300978111"; // <--TEST
-#else
-        string adUnitId = "unexpected_platform";
-#endif
+            #if DEBUG
+                string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+            #else
+                string adUnitId = "ca-app-pub-9853268330632359/7656821213";
+            #endif
+
                 banner = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
 
 
 
+                banner.OnAdLeavingApplication += BannerOnAdLeavingApplication;
+
                 AdRequest request = new AdRequest.Builder()
-                    // .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")
+            #if DEBUG
+                    .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")
+            #endif
                     .Build();
                 this.banner.LoadAd(request);
             }
+        }
+
+        private void BannerOnAdLeavingApplication(object sender, EventArgs args)
+        {
+            AmplitudeManager.LogOnInteractWithBanner();
         }
     }
 }

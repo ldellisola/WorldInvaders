@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ffd300c626f2614287d4196a4052dd2, type: 3}
+  m_Name: New Level Data
+  m_EditorClassIdentifier: 
+  WorldSprite: {fileID: 21300000, guid: 8ff5851d96e353540b1e6d34f6dafe7b, type: 3}
+  Name: Level TEST
+  mode: 0
+  Enemies:
+  - {fileID: 11400000, guid: 4d8679bec63f0af488f9cc3856c41944, type: 2}
+  - {fileID: 11400000, guid: 4d8679bec63f0af488f9cc3856c41944, type: 2}
+  WorldLife: 9999999

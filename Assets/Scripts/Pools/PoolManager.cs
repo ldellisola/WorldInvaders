@@ -6,5 +6,6 @@ namespace Assets.Scripts.Pools
     {
         public MisilePool MisilePool;
         public EnemyPool EnemyPool;
+        public PerkPool PerkPool;
     }
 }

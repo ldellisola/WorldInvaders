@@ -63,4 +63,5 @@ public class SpriteAnimator : MonoBehaviour
         elapsedTime = 0;
         IsPlaying = true;
     }
+
 }

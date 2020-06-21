@@ -56,10 +56,10 @@ public class SetColliderToCamera : MonoBehaviour
         GameObject topWall = new GameObject("Top Wall");
         topWall.layer = 8; //World Border
         topWall.transform.parent = this.transform;
-        topWall.transform.localPosition = new Vector2(0, border.y -2.8f + size / 2 );
+        topWall.transform.localPosition = new Vector2(0, border.y -3f + size / 2 );
 
         collider = topWall.AddComponent<BoxCollider2D>();
-        collider.size = new Vector2(2 * border.x, size);
+        collider.size = new Vector2(2 * border.x, size + 1f);
         collider.isTrigger = true;
 
 

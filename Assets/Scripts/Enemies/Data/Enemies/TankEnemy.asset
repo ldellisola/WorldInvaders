@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialPositon: {x: -5, y: 9}
   misile: {fileID: 11400000, guid: 2b1142e89e17aba46a300e51d7ab3df0, type: 2}
-  velocity: 0.1
+  velocity: 0.2
   movementStyle: 2
   sprite: {fileID: 21300000, guid: 4c8a2444f139c1447b5bd181110e264b, type: 3}
   life: 100
   mass: 20
-  spawnInterval: 3
+  SpawnOrder: []

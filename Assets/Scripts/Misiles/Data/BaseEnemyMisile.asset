@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5667f24f092dfa4286420bacfab4849, type: 3}
   m_Name: BaseEnemyMisile
   m_EditorClassIdentifier: 
+  scale: 2
   sprite: {fileID: 21300004, guid: caa07a017431edc43866c47b6f37a5bf, type: 3}
-  range: 6
-  timeAlive: 10
-  speed: 12
-  damage: 100
+  range: 20
+  timeAlive: 15
+  speed: 15
+  damage: 20
   ShootingSound: {fileID: 8300000, guid: 8506023a48b07a641ab009add2a0a67c, type: 3}

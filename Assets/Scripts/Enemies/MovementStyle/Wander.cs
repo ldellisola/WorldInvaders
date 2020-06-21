@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Enemies.Data;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,19 +23,29 @@ namespace Assets.Scripts.Enemies.MovementStyle
         private const float MassMultiplier = 1;
         private const float MaxVelMultiplier = 1;
         private const float MinDistanceToBorder = 1f;
-        public void Update(BaseEnemyData data, MonoBehaviour enemy)
+
+
+        public void Update(BaseEnemyData data, MonoBehaviour enemy, float? overwriteSpeed = null, float? overwriteMass = null)
         {
             if (timeSinceNewTarget == 0 || (enemy.transform.position - target).sqrMagnitude < 1)
             {
                 target = GenerateNewTarget(enemy.transform.position);
                 timeSinceNewTarget = 0;
+                
+                if(Random.Range(0,4) == 0 )
+                    enemy.GetComponent<FireEnemyMisile>().Fire();
+
             }
 
             timeSinceNewTarget += Time.deltaTime;
 
             var direction = new Diver().Update(
-                target, enemy.transform.position, enemy.transform.forward, data.velocity * VelMultiplier
-                , data.velocity * MaxVelMultiplier, data.mass * MassMultiplier);
+                target,
+                enemy.transform.position, 
+                enemy.transform.forward,
+                overwriteSpeed ?? data.velocity * VelMultiplier,
+                overwriteSpeed ?? data.velocity * MaxVelMultiplier,
+                overwriteMass ?? data.mass * MassMultiplier);
 
             enemy.transform.Translate(direction);
 
@@ -140,5 +151,7 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
             return a;
         }
+
+
     }
 }

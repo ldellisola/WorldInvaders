@@ -1,9 +1,12 @@
 ﻿using System;
+using Assets.Scripts.Enemies.Data;
 using Assets.Scripts.Enemies.MovementStyle;
 using Assets.Scripts.Misiles;
 using Assets.Scripts.Pools;
 using Assets.Scripts.UI.Overlay;
+using Assets.Scripts.Utils;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Enemies
 {
@@ -11,8 +14,7 @@ namespace Assets.Scripts.Enemies
     {
         public PoolManager pools;
         public GameController GameController;
-
-        public float CollisionDamage => data.velocity * data.mass;
+        public float CollisionDamage => data.velocity * data.mass * 10;
 
         public BaseEnemyData data {get; private set; }
         private SpriteRenderer sp;
@@ -20,11 +22,18 @@ namespace Assets.Scripts.Enemies
         private IMovementStyle movement = null;
         private bool InZone = false;
 
+
+        private bool dropsPerk = false;
+
         private Diver initalMovement = null;
 
+        private float OutsideZonespeed = 1;
+        private float OutsideZoneMass = 5;
 
         public EnemyGenerator EnemyManager;
 
+
+        private ParticleSystem particleSystem;
 
         public void Awake()
         {
@@ -34,12 +43,17 @@ namespace Assets.Scripts.Enemies
 
             child.transform.localScale = new Vector3(3.7f, 3.7f);
 
+            particleSystem = GetComponent<ParticleSystem>();
+
             sp = child.AddComponent<SpriteRenderer>();
             sp.sortingLayerName = "ShipsLayer";
         }
 
         public void Initialize(BaseEnemyData data)
         {
+            particleSystem.Stop();
+
+            dropsPerk = false;
             this.transform.position = data.initialPositon;
             this.data = data;
 
@@ -59,10 +73,18 @@ namespace Assets.Scripts.Enemies
                     break;
                 case EnemyMovementStyle.Wander:
                     movement = new Wander();
+
+                    if (Random.value > 0.75)
+                    {
+                        dropsPerk = true;
+                        particleSystem.Play();
+                    }
+
                     break;
             }
 
             initalMovement = new Diver(new Vector2(0,10));
+            
             InZone = false;
 
         }
@@ -73,10 +95,12 @@ namespace Assets.Scripts.Enemies
             if (!GameController.IsGamePaused)
             {
                 if (InZone)
+                {
                     movement.Update(data, this);
+                }
                 else
                 {
-                    initalMovement.Update(data, this);
+                    initalMovement.Update(data, this,OutsideZonespeed,OutsideZoneMass);
 
                     InZone = isInZone();
                 }
@@ -134,9 +158,26 @@ namespace Assets.Scripts.Enemies
 
         public void Explode()
         {
-            EnemyManager.NotifyEnemyKilled();
+            EnemyManager.NotifyEnemyKilled(data.movementStyle);
             this.gameObject.SetActive(false);
             pools.EnemyPool.Add(new EnemyExplosion.Data(this.transform.position));
+
+            if(dropsPerk)
+                pools.PerkPool.DropPerk(transform.position);
+
+            switch (data.movementStyle)
+            {
+                case EnemyMovementStyle.FleeAndArrival:
+                    GameStats.KilledRegular++;
+                    break;
+                case EnemyMovementStyle.Diver:
+                    GameStats.KilledDiver++;
+                    break;
+                case EnemyMovementStyle.Wander:
+                    GameStats.KilledTank++;
+                    break;
+            }
+
         }
     }
 }

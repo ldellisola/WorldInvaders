@@ -4,6 +4,7 @@ namespace Assets.Scripts.Enemies
 {
     public class EnemyExplosion : MonoBehaviour, IPooledObject<EnemyExplosion.Data>
     {
+        private AudioSource audioSource;
         public class Data
         {
             public Vector2 pos;
@@ -16,10 +17,15 @@ namespace Assets.Scripts.Enemies
 
         public SpriteAnimator spriteAnimator;
 
+        void Awake()
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
         public void Initialize(Data data)
         {
             this.transform.position = data.pos;
             spriteAnimator.Play();
+            audioSource.Play();
         }
 
 

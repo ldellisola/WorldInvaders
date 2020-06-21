@@ -6,6 +6,7 @@ TagManager:
   tags:
   - AdRemover
   - New tag
+  - Player-Planet-Orbit
   layers:
   - Default
   - TransparentFX

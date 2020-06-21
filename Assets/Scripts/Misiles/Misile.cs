@@ -29,9 +29,12 @@ namespace Assets.Scripts.Misiles
             this.transform.position = data.position;
             this.Data = data;
             lifetime = 0;
+            data.direction.Normalize();
             Body.AddForce(data.direction * speed , ForceMode2D.Force);
 
             GetComponent<SpriteRenderer>().sprite = data.sprite;
+
+            transform.localScale = new Vector3(data.scale,data.scale,data.scale);
 
             if (data.ShootingSound != null)
             {
@@ -57,7 +60,7 @@ namespace Assets.Scripts.Misiles
                 if (lifetime >= maxLifeTime || (transform.position - Data.position).sqrMagnitude >
                     maxTravelDistance * maxTravelDistance)
                 {
-                    PoolManager.MisilePool.Add(new MisileExplosion.Data(this.transform.position));
+                    PoolManager.MisilePool.Add(new MisileExplosion.Data(this.transform.position, Data.scale));
                     gameObject.SetActive(false);
                 }
             }
@@ -82,7 +85,7 @@ namespace Assets.Scripts.Misiles
 
         public void Explode()
         {
-            PoolManager.MisilePool.Add(new MisileExplosion.Data(this.transform.position));
+            PoolManager.MisilePool.Add(new MisileExplosion.Data(this.transform.position, Data.scale));
 
             this.gameObject.SetActive(false);
         }

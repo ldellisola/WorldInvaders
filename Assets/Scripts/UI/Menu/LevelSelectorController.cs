@@ -30,6 +30,7 @@ namespace Assets.Scripts.UI.Menu
 
         public void ButtonClick_GoBack()
         {
+            AmplitudeManager.LogOnReturnToMenuFromLevels();
             LevelSelectorPanel.ClosePanel();
             MainMenuPanel.OpenPanel();
 

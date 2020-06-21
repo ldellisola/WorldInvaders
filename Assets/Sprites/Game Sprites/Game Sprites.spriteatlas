@@ -26,15 +26,20 @@ SpriteAtlas:
       padding: 4
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 6de135724dc88b24a9d53f7761b2ef6a, type: 3}
-    totalSpriteSurfaceArea: 526830
+    totalSpriteSurfaceArea: 5782678
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300004, guid: c4b06c20a938a6e46949e8faac79b20e, type: 3}
+  - {fileID: 21300002, guid: c4b06c20a938a6e46949e8faac79b20e, type: 3}
+  - {fileID: 21300000, guid: c4b06c20a938a6e46949e8faac79b20e, type: 3}
+  - {fileID: 21300000, guid: d1633d80f997845418c21db664ba138f, type: 3}
+  - {fileID: 21300000, guid: 7d2d52905e45ae247b3390d0f42fdc49, type: 3}
   - {fileID: -7061159883300251746, guid: 907a19a0cc99bf04288d3b0c0d6afcfb, type: 3}
   - {fileID: -5876230404456235001, guid: 907a19a0cc99bf04288d3b0c0d6afcfb, type: 3}
   - {fileID: 7788287979965792003, guid: 907a19a0cc99bf04288d3b0c0d6afcfb, type: 3}
@@ -47,13 +52,44 @@ SpriteAtlas:
   - {fileID: -3690502768834906923, guid: 907a19a0cc99bf04288d3b0c0d6afcfb, type: 3}
   - {fileID: 3815954189206336483, guid: 907a19a0cc99bf04288d3b0c0d6afcfb, type: 3}
   - {fileID: 21300000, guid: 7b52acf0fd6dff8419cf32e5c13881f0, type: 3}
+  - {fileID: 21300000, guid: caa07a017431edc43866c47b6f37a5bf, type: 3}
+  - {fileID: 21300002, guid: caa07a017431edc43866c47b6f37a5bf, type: 3}
+  - {fileID: 21300004, guid: caa07a017431edc43866c47b6f37a5bf, type: 3}
+  - {fileID: 21300004, guid: 4b3cde31bdef54c458f0b04071d88cc5, type: 3}
+  - {fileID: 21300002, guid: 4b3cde31bdef54c458f0b04071d88cc5, type: 3}
+  - {fileID: 21300000, guid: 4b3cde31bdef54c458f0b04071d88cc5, type: 3}
   - {fileID: 21300000, guid: 3b75bb71da2b6b042b3f7f4ba7f013d7, type: 3}
+  - {fileID: 21300000, guid: 0a73328190b6a1b4787cc6921bbe0f94, type: 3}
+  - {fileID: 21300000, guid: de9bd78144a44764f99b085846a2e03a, type: 3}
+  - {fileID: 21300000, guid: ddc556a241acd514ba8409f6e064201c, type: 3}
+  - {fileID: 21300000, guid: 01e466e2fb6eea34ea00e20acc789c01, type: 3}
   - {fileID: 21300000, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
   - {fileID: 21300002, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
   - {fileID: 21300004, guid: fb49bbb3e2b49674f98799696c31c86c, type: 3}
+  - {fileID: 21300000, guid: 4c8a2444f139c1447b5bd181110e264b, type: 3}
+  - {fileID: 21300000, guid: 709f6dc460a0f30408be2662721887c0, type: 3}
+  - {fileID: 21300000, guid: 0aab17f474ae0434eb7aff4a29cc0123, type: 3}
+  - {fileID: 21300000, guid: c37b6465dcc722340a3a437ce8dbbe96, type: 3}
+  - {fileID: 21300004, guid: 593c7c564adcda74fbc675230116db6f, type: 3}
+  - {fileID: 21300000, guid: 593c7c564adcda74fbc675230116db6f, type: 3}
+  - {fileID: 21300002, guid: 593c7c564adcda74fbc675230116db6f, type: 3}
+  - {fileID: 21300000, guid: 8d93f8b646fad08429a3686590a61bf7, type: 3}
+  - {fileID: 21300000, guid: 4a868e28be12a6349a2742aa1909ed42, type: 3}
+  - {fileID: 21300000, guid: a27406c97e517164cbd7003354e6739c, type: 3}
+  - {fileID: 21300000, guid: c135213a5c54f2f4984eaa105cc33b20, type: 3}
   - {fileID: 21300000, guid: 36da0b7bdceee7a48851d5dd2aefe98f, type: 3}
+  - {fileID: 21300000, guid: 4ecb598b03c4c5b45bea92168edb3474, type: 3}
+  - {fileID: 21300000, guid: a8b9579cc05ec924b8db3e8422459a0b, type: 3}
+  - {fileID: 21300000, guid: ef1bf2ecc16140f4195ed991ac4136c1, type: 3}
   - {fileID: 21300000, guid: 8ff5851d96e353540b1e6d34f6dafe7b, type: 3}
+  - {fileID: 21300000, guid: 765aab9d7d5f75f478521312f0b8a3dd, type: 3}
+  - {fileID: 21300000, guid: 1eebe61fa30929248bdcda4d7c3c51ec, type: 3}
   m_PackedSpriteNamesToIndex:
+  - BulletBombSpriteSheetGreen_2
+  - BulletBombSpriteSheetGreen_1
+  - BulletBombSpriteSheetGreen_0
+  - Sun
+  - Galaxy
   - Explosion_10
   - Explosion_9
   - Explosion_8
@@ -66,11 +102,37 @@ SpriteAtlas:
   - Explosion_3
   - Explosion_2
   - idle_player_basic
+  - BulletBombSpriteSheetYellow_0
+  - BulletBombSpriteSheetYellow_1
+  - BulletBombSpriteSheetYellow_2
+  - BulletBombSpriteSheetRed_2
+  - BulletBombSpriteSheetRed_1
+  - BulletBombSpriteSheetRed_0
   - ShieldSPRT
+  - Water-Planet-wWih-Small-Islands
+  - red-planet-sputnik
+  - Lava-PLanet
+  - Storm-Planet
   - BulletBombSpriteSheetBlue_0
   - BulletBombSpriteSheetBlue_1
   - BulletBombSpriteSheetBlue_2
+  - idle_orb_red
+  - Dark-PLanet
+  - earth-like
+  - Red-Planet-With-Ice
+  - BulletBombSpriteSheetPurple_2
+  - BulletBombSpriteSheetPurple_0
+  - BulletBombSpriteSheetPurple_1
+  - Orange-Planet
+  - Sand-Planet
+  - white-dwarf-star
+  - Purple-Planet
   - idle_orb_blue
+  - Space
+  - idle_orb_green
+  - Ice-Planet
   - blue-planet
+  - Red-Planet-1
+  - cyan-planet
   m_Tag: Game Sprites
   m_IsVariant: 0

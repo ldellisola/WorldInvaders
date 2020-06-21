@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Utils.Extensions;
+﻿using Assets.Scripts.Enemies.Data;
+using Assets.Scripts.Utils.Extensions;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -28,8 +29,15 @@ namespace Assets.Scripts.Enemies.MovementStyle
         private const float MassMultiplier = 1;
         private const float MaxVelMultiplier = 2;
 
-        public void Update(BaseEnemyData data, MonoBehaviour enemy)
+        private float? OverwriteSpeed { get; set; } = null;
+
+        private float? OverwriteMass { get; set; } = null;
+
+        public void Update(BaseEnemyData data, MonoBehaviour enemy, float? overwriteSpeed = null, float? overwriteMass = null)
         {
+            OverwriteSpeed = overwriteSpeed;
+            OverwriteMass = overwriteMass;
+
             state = SwitchState(data, enemy);
             switch (state)
             {
@@ -47,6 +55,8 @@ namespace Assets.Scripts.Enemies.MovementStyle
                     break;
             }
         }
+
+
 
         public void DrawGizmos(BaseEnemyData data, MonoBehaviour enemy)
         {
@@ -130,14 +140,18 @@ namespace Assets.Scripts.Enemies.MovementStyle
 
         private void Wander(BaseEnemyData data, MonoBehaviour enemy)
         {
-            w.Update(data,enemy);
+            w.Update(data,enemy, OverwriteSpeed, OverwriteMass);
         }
 
         private void Dive(BaseEnemyData data, MonoBehaviour enemy)
         {
             var direction = new Diver().Update(
-                target,enemy.transform.position,enemy.transform.forward,data.velocity * VelMultiplier
-                ,data.velocity * MaxVelMultiplier,data.mass * MassMultiplier);
+                target,enemy.transform.position,
+                enemy.transform.forward,
+                OverwriteSpeed?? data.velocity * VelMultiplier
+                ,OverwriteSpeed ?? data.velocity * MaxVelMultiplier
+                ,OverwriteMass ?? data.mass * MassMultiplier
+                );
 
             enemy.transform.Translate(direction);
         }

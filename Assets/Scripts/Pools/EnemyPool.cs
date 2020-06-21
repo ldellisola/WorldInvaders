@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Enemies;
+using Assets.Scripts.Enemies.Data;
 using UnityEngine;
 
 namespace Assets.Scripts.Pools

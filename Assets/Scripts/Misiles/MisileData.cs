@@ -22,8 +22,10 @@ namespace Assets.Scripts.Misiles
             this.direction.Normalize();
             this.Shooter = Shooter;
             this.ShootingSound = o.ShootingSound;
+            this.scale = o.scale;
         }
 
+        public float scale = 1;
         public Sprite sprite;
         public float range;
         public float timeAlive;

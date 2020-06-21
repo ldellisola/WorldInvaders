@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.UI.DataModels;
+﻿using Assets.Scripts.Ads;
+using Assets.Scripts.UI.DataModels;
 using Assets.Scripts.Utils;
 using TMPro;
 using UnityEngine;
@@ -26,6 +27,7 @@ namespace Assets.Scripts.UI
         public void ButtonClick_SelectLevel()
         {
             LocalStorage.SetObject("levelData",data.GenerateSharedData());
+            AmplitudeManager.LogOnSelectedLevel(data.Name);
             GetComponentInParent<BasePanel>().ClosePanel();
             SceneManager.LoadScene(sceneName: "SampleLevel",LoadSceneMode.Single);
         }

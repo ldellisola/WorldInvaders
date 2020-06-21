@@ -4,60 +4,64 @@ using System.Collections.Generic;
 using Assets.Scripts.Misiles;
 using UnityEngine;
 
-
-public enum EnemyMovementStyle
+namespace Assets.Scripts.Enemies.Data
 {
-    Diver,
-    FleeAndArrival,
-    Wander,
-    PursuitAndEvade
-}
-
-[CreateAssetMenu(menuName = "EnemyData",order = 1)]
-public class BaseEnemyData : ScriptableObject
-{
-    public Vector2 initialPositon;
-    public MisileData misile;
-    public float velocity;
-    public EnemyMovementStyle movementStyle;
-    public Sprite sprite;
-    public float life;
-    public float mass;
-
-    public List<float> SpawnOrder;
-    private int SpawnOrderIndex = 0;
-    private float timer { get; set; } = 0;
-
-
-    public void Initialize(Vector2 pos)
+    public enum EnemyMovementStyle
     {
-        initialPositon = pos;
+        Diver,
+        FleeAndArrival,
+        Wander,
+        PursuitAndEvade
     }
 
-    public void AddTime(float time)
+    [CreateAssetMenu(menuName = "EnemyData",order = 1)]
+    public class BaseEnemyData : ScriptableObject
     {
-        timer += time;
-    }
+        public Vector2 initialPositon;
+        public MisileData misile;
+        public float velocity;
+        public EnemyMovementStyle movementStyle;
+        public Sprite sprite;
+        public float life;
+        public float mass;
 
-    public bool FinishedCreatingEnemies() => (SpawnOrderIndex >= SpawnOrder.Count);
+        public List<float> SpawnOrder;
+        internal int SpawnOrderIndex { get; set; }= 0;
+        internal float timer { get; private set; } = 0;
 
+        internal float WaveDuration { get; set; } = 0;
 
-    public bool HasToBeCreated()
-    {
-        if (SpawnOrderIndex >= SpawnOrder.Count)
-            return false;
-
-        if (timer > SpawnOrder[SpawnOrderIndex])
+        public void Initialize(Vector2 pos)
         {
-            SpawnOrderIndex++;
-            return true;
+            initialPositon = pos;
         }
-        return false;
-    }
 
-    public void ResetTimer()
-    {
-        timer = 0;
-        SpawnOrderIndex = 0;
+        public void AddTime(float time)
+        {
+            timer += time;
+        }
+
+        public bool FinishedCreatingEnemies() => (SpawnOrderIndex >= SpawnOrder.Count);
+
+
+        public bool HasToBeCreated()
+        {
+            if (SpawnOrderIndex >= SpawnOrder.Count)
+                return false;
+
+            if (timer > SpawnOrder[SpawnOrderIndex])
+            {
+                SpawnOrderIndex++;
+                return true;
+            }
+            return false;
+        }
+
+        public void ResetTimer()
+        {
+            timer = 0;
+            SpawnOrderIndex = 0;
+        }
+
     }
 }

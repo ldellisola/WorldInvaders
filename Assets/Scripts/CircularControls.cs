@@ -21,59 +21,45 @@ namespace Assets.Scripts
         private float _angle;
 
 
-
-
-        private void Start()
-        {
-
-        }
-
         private void Update()
         {
 
             if (!GameController.IsGamePaused)
             {
-                if (touchControls)
+                if (Input.touchCount > 0)
                 {
-                    if (Input.touchCount > 0)
+                    var touch = Input.GetTouch(0);
+                    if (touch.phase == TouchPhase.Moved)
                     {
-                        var touch = Input.GetTouch(0);
-                        if (touch.phase == TouchPhase.Moved)
+                        if (touch.deltaPosition.x > 0 && CanMoveRight())
                         {
-                            if (touch.deltaPosition.x > 0 && CanMoveRight())
-                            {
 
-                                _angle += touch.deltaPosition.x / 1000;
-                                var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
-                                transform.position = _centre.transform.position + offset;
-                            }
-                            else if (touch.deltaPosition.x < 0 && CanMoveLeft())
-                            {
-                                _angle += touch.deltaPosition.x / 1000;
-                                var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
-                                transform.position = _centre.transform.position + offset;
-                            }
+                            _angle += touch.deltaPosition.x / 1000;
+                            var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+                            transform.position = _centre.transform.position + offset;
+                        }
+                        else if (touch.deltaPosition.x < 0 && CanMoveLeft())
+                        {
+                            _angle += touch.deltaPosition.x / 1000;
+                            var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+                            transform.position = _centre.transform.position + offset;
                         }
                     }
                 }
-                else
+
+                if (Input.GetKey(KeyCode.RightArrow) && CanMoveRight())
                 {
-                    if (Input.GetKey(KeyCode.RightArrow) && CanMoveRight())
-                    {
-                        _angle += RotateSpeed * Time.deltaTime;
+                    _angle += RotateSpeed * Time.deltaTime;
 
-                        var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
-                        transform.position = _centre.transform.position + offset;
-                    }
-                    else if (Input.GetKey(KeyCode.LeftArrow) && CanMoveLeft())
-                    {
-                        _angle -= RotateSpeed * Time.deltaTime;
-                        var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
-                        transform.position = _centre.transform.position + offset;
-                    }
+                    var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+                    transform.position = _centre.transform.position + offset;
                 }
-
-
+                else if (Input.GetKey(KeyCode.LeftArrow) && CanMoveLeft())
+                {
+                    _angle -= RotateSpeed * Time.deltaTime;
+                    var offset = new Vector3(Mathf.Sin(_angle), Mathf.Cos(_angle)) * Radius;
+                    transform.position = _centre.transform.position + offset;
+                }
 
 
                 Vector2 direction = transform.position - _centre.transform.position;

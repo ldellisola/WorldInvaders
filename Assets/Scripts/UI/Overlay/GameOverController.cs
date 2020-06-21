@@ -9,10 +9,7 @@ namespace Assets.Scripts.UI.Overlay
     public class GameOverController : MonoBehaviour
     {
         public BasePanel gameOverPanel;
-        public EnemyGenerator EnemyGenerator;
-
         public GameController GameController;
-
         public AdManager AdManager;
 
 
@@ -27,33 +24,51 @@ namespace Assets.Scripts.UI.Overlay
         // Update is called once per frame
         void Update()
         {
-
-            if (EnemyGenerator.KiledAllEnemies())
+            if (RestartGame)
             {
-                gameOverPanel.OpenPanel();
+                RestartGame = false;
+                gameOverPanel.ClosePanel();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
+            }
+
+            if (GoToMenu)
+            {
+                AmplitudeManager.LogOnGoBackToMenuOnGame();
+                GoToMenu = false;
+                SceneManager.LoadScene("MenuGUI",LoadSceneMode.Single);
+            }
+
+            if (Revive)
+            {
+                gameOverPanel.ClosePanel();
+
+                GameController.ResumeGame();
+                Revive = false;
+                GameController.ResetPlayerLife();
             }
         }
 
-
+        private bool RestartGame { get; set; } = false;
         public void ButtonClick_TryAgain()
         {
             AdManager.RunIntertitialAd((sender, args) =>
             {
                 Debug.Log("INTERTITAL AD ENDED");
-                gameOverPanel.ClosePanel();
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
+                RestartGame = true;
             });
             
         }
 
+        private bool GoToMenu { get; set; } = false;
         public void ButtonClick_MainMenu()
         {
             AdManager.RunIntertitialAd((sender, args) =>
             {
-                SceneManager.LoadScene("MenuGUI",LoadSceneMode.Single);
+                GoToMenu = true;
             });
         }
 
+        private bool Revive { get; set; } = false;
         public void ButtonClick_Revive()
         {
             AdManager.RunRewardedAd((sender, reward) =>
@@ -63,13 +78,7 @@ namespace Assets.Scripts.UI.Overlay
                 Debug.Log("REWARDED AD RESETED LIFE");
 
 
-                GameController.ResetPlayerLife();
-
-
-
-                Debug.Log("REWARDED AD PANEL STARTED CLOSING");
-
-                gameOverPanel.ClosePanel();
+                Revive = true;
 
                 Debug.Log("REWARDED AD CONTINUE");
 

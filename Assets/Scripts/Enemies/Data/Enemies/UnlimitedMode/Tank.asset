@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f11e59a270fbb1544b9d012e29872f63, type: 3}
+  m_Name: Tank
+  m_EditorClassIdentifier: 
+  initialPositon: {x: 6.0898924, y: 18.983137}
+  misile: {fileID: 11400000, guid: 2b1142e89e17aba46a300e51d7ab3df0, type: 2}
+  velocity: 0.5
+  movementStyle: 2
+  sprite: {fileID: 21300000, guid: 4c8a2444f139c1447b5bd181110e264b, type: 3}
+  life: 100
+  mass: 40
+  SpawnOrder:
+  - 13.661106
+  - 15.588152
+  - 10.619848
+  - 6.757669
+  - 10.539631
+  - 19.084179
+  - 18.486677
+  - 13.52611
+  - 22.288685

@@ -33,12 +33,14 @@ public class World : MonoBehaviour
         if (collider.TryGetComponent(out Misile mis) && mis.Data.Shooter == MisileData.Type.Enemy)
         {
             Life -= mis.damage;
+            GameStats.DamagePlanet += mis.damage;
             mis.Explode();
         }
 
         if (collider.TryGetComponent(out Enemy enemy))
         {
             Life -= enemy.CollisionDamage;
+            GameStats.DamagePlanet += enemy.CollisionDamage;
             enemy.Explode();
         }
     }

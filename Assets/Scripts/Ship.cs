@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Misiles;
 using Assets.Scripts.UI.Overlay;
+using Assets.Scripts.Utils;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -34,6 +35,7 @@ namespace Assets.Scripts
                 {
 
                     life -= misile.damage;
+                    GameStats.DamagePlayer += misile.damage;
                     misile.Explode();
                 }
             }

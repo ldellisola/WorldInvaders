@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Enemies.Data;
 using Assets.Scripts.Utils.Extensions;
 using UnityEngine;
 
@@ -27,12 +28,18 @@ namespace Assets.Scripts.Enemies.MovementStyle
             target = targ;
         }
 
-        public void Update(BaseEnemyData data, MonoBehaviour enemy)
+        public void Update(BaseEnemyData data, MonoBehaviour enemy, float? overwriteSpeed = null,  float? overwriteMass = null)
         {
             enemy.transform.Translate(
-                Update(target,enemy.transform.position,enemy.transform.forward,
-                            data.velocity,2 * data.velocity,data.mass));
+                Update(target,
+                    enemy.transform.position,
+                    enemy.transform.forward,
+                    overwriteSpeed ?? data.velocity,
+                    2 * overwriteSpeed ?? data.velocity,
+                    overwriteMass ?? data.mass
+                ));
         }
+
 
         public void DrawGizmos(BaseEnemyData data, MonoBehaviour enemy)
         {

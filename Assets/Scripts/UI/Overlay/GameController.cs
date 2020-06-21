@@ -17,8 +17,7 @@ namespace Assets.Scripts.UI.Overlay
 
         public Slider SpaceshipHealthBar;
         public Slider WorldHealthBar;
-
-        public EnemyGenerator EnemyManager;
+        public EnemyGenerator EnemyGenerator;
         public TextMeshProUGUI EnemiesLeft;
 
         public Image WorldImage;
@@ -28,12 +27,16 @@ namespace Assets.Scripts.UI.Overlay
         public World World;
 
         public bool IsGamePaused { get; private set; }
-    
+        public bool IsGameLost { get; private set; } = false;
+
+        public bool IsUnlimitedMode => levelData.isUnlimited;
+        public int CurrentWave => EnemyGenerator.CurrentWaveNumber;
 
         private SharedLevelData levelData;
 
         public void Start()
         {
+            IsGameLost = false;
             AdManager.RequestBanner();
 
             PausePanel.onOpen = t => { PauseGame(); };
@@ -62,6 +65,12 @@ namespace Assets.Scripts.UI.Overlay
             UpdateSpaceShipHealthBar();
             UpdateWorldHealthBar();
             UpdateEnemiesLeft();
+
+            if (EnemyGenerator.GameWon())
+            {
+                GameOverPanel.OpenPanel();
+                IsGameLost = false;
+            }
         }
 
 
@@ -90,7 +99,9 @@ namespace Assets.Scripts.UI.Overlay
         public void ResetPlayerLife()
         {
             SpaceShip.ResetLife();
-            World.ResetLife();
+            World.ResetLife();                
+            IsGameLost = false;
+
         }
 
 
@@ -102,6 +113,7 @@ namespace Assets.Scripts.UI.Overlay
             if (SpaceShip.life <= 0)
             {
                 GameOverPanel.OpenPanel();
+                IsGameLost = true;
             }
 
 
@@ -113,15 +125,18 @@ namespace Assets.Scripts.UI.Overlay
             if (World.Life <= 0)
             {
                 GameOverPanel.OpenPanel();
+                IsGameLost = true;
             }
         }
 
         private int enemiesLeft = -1;
+        
+
         private void UpdateEnemiesLeft()
         {
-            if (enemiesLeft != EnemyManager.EnemiesLeft())
+            if (enemiesLeft != EnemyGenerator.EnemiesLeft())
             {
-                enemiesLeft = EnemyManager.EnemiesLeft();
+                enemiesLeft = EnemyGenerator.EnemiesLeft();
 
                 EnemiesLeft.text = enemiesLeft + " Enemies Left";
             }

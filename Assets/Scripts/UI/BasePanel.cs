@@ -29,9 +29,11 @@ namespace Assets.Scripts.UI
 
         public void OpenPanel()
         {
+            canvasGroup = this.GetComponent<CanvasGroup>();
             this.gameObject.SetActive(true);
             canvasGroup.interactable = true;
-            LeanTween.alphaCanvas(this.canvasGroup, 1, FadeTime).setOnComplete(t => { onOpen.Invoke(gameObject);});
+            LeanTween.alphaCanvas(this.canvasGroup, 1, FadeTime);
+            onOpen.Invoke(gameObject);
             //LeanTween.alpha(this.gameObject, 1, 1).setOnStart(()=> this.gameObject.SetActive(true));
             // onOpen.Invoke(gameObject);
         }
@@ -39,6 +41,7 @@ namespace Assets.Scripts.UI
 
         public void ClosePanel()
         {
+            canvasGroup = this.GetComponent<CanvasGroup>();
             canvasGroup.interactable = false;
 
             onClose.Invoke(gameObject);

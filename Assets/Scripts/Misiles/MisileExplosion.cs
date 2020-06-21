@@ -7,10 +7,11 @@ namespace Assets.Scripts.Misiles
         public class Data
         {
             public Vector2 pos;
-
-            public Data(Vector2 pos)
+            public float scale;
+            public Data(Vector2 pos, float scale)
             {
                 this.pos = pos;
+                this.scale = scale;
             }
         }
 
@@ -19,6 +20,7 @@ namespace Assets.Scripts.Misiles
         public void Initialize(Data data)
         {
             this.transform.position = data.pos;
+            this.transform.localScale = Vector3.one * data.scale;
             spriteAnimator.Play();
         }
 

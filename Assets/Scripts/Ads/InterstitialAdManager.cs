@@ -16,12 +16,12 @@ namespace Assets.Scripts.Ads
         {
             if (EnableAds)
             {
-#if UNITY_ANDROID
-                string adUnitId =
-                    "ca-app-pub-9853268330632359/1494296604"; //"ca-app-pub-3940256099942544/1033173712"; // <--TEST 
-#else
-        string adUnitId = "unexpected_platform";
-#endif
+            #if DEBUG
+                string adUnitId = "ca-app-pub-3940256099942544/1033173712"; // <--TEST   //
+            #else
+                string adUnitId = "ca-app-pub-9853268330632359/1494296604";
+            #endif
+
 
                 // Initialize an InterstitialAd.
                 this.interstitial = new InterstitialAd(adUnitId);
@@ -40,7 +40,9 @@ namespace Assets.Scripts.Ads
                 this.interstitial.OnAdLeavingApplication += InterstitialHandleOnAdLeavingApplication;
 
                 AdRequest request = new AdRequest.Builder()
-                    // .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")
+            #if DEBUG
+                    .AddTestDevice("2077ef9a63d2b398840261c8221a0c9b")
+            #endif
                     .Build();
 
                 interstitial.LoadAd(request);
@@ -55,6 +57,10 @@ namespace Assets.Scripts.Ads
             if (this.EnableAds)
             {
                 Debug.Log("AD ENABLED");
+            }
+            else
+            {
+                onAdCloses.Invoke(null, null);
             }
 
             if (this.EnableAds && this.interstitial.IsLoaded())
@@ -92,6 +98,7 @@ namespace Assets.Scripts.Ads
 
         private void InterstitialHandleOnAdLeavingApplication(object sender, EventArgs args)
         {
+            AmplitudeManager.LogOnInteractWithInterstitial();
             MonoBehaviour.print("HandleAdLeavingApplication event received");
         }
     }

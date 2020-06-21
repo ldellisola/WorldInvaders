@@ -19,4 +19,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 36da0b7bdceee7a48851d5dd2aefe98f, type: 3}
   life: 50
   mass: 10
-  spawnInterval: 5
+  SpawnOrder: []

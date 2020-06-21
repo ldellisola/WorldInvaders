@@ -17,7 +17,7 @@ namespace Assets.Scripts.Ads
 
         void Start()
         {
-            MobileAds.Initialize(initStatus => { });
+            MobileAds.Initialize(status => { });
 
             RequestInterstitial();
             RequestRewarded();
@@ -25,12 +25,19 @@ namespace Assets.Scripts.Ads
 
         void Update()
         {
+            #if UNITY_EDITOR || UNITY_EDITOR_64 || UNITY_EDITOR_WIN
+            AdsNotSet = true;
+            LocalStorage.SetBool(AdStorageKey,false);
+            EnableAds = LocalStorage.GetBool(AdStorageKey);
+            #else
+
             if (PurchaseManager.IsInitialized && AdsNotSet)
             {
                 AdsNotSet = true;
                 LocalStorage.SetBool(AdStorageKey,!PurchaseManager.HasBoughtNoAds());
                 EnableAds = LocalStorage.GetBool(AdStorageKey);
             }
+            #endif
         }
 
 
