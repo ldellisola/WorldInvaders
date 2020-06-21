@@ -4,8 +4,8 @@
 
 ### Privacy policy
 
- [Click here](PrivacyPolicy.md) 
+ [Click here](PrivacyPolicy.html) 
 
 ### Terms of Service
 
-[Click Here](TermsOfService.md) 
+[Click Here](TermsOfService.html)  
