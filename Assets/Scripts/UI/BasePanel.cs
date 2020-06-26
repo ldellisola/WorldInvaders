@@ -10,8 +10,9 @@ namespace Assets.Scripts.UI
 {
     public class BasePanel : MonoBehaviour
     {
-        public Action<GameObject> onOpen { private get; set; } = t => { };
-        public Action<GameObject> onClose { private get; set; } = t => { };
+        private List<Action<GameObject>> onOpen { get; set; } = new List<Action<GameObject>>();
+        private List<Action<GameObject>> onClose { get; set; } = new List<Action<GameObject>>();
+        
 
         public float initialAlpha;
         public float FadeTime = 0.2f;
@@ -33,18 +34,27 @@ namespace Assets.Scripts.UI
             this.gameObject.SetActive(true);
             canvasGroup.interactable = true;
             LeanTween.alphaCanvas(this.canvasGroup, 1, FadeTime);
-            onOpen.Invoke(gameObject);
+            onOpen.ForEach(t=>t.Invoke(gameObject));
             //LeanTween.alpha(this.gameObject, 1, 1).setOnStart(()=> this.gameObject.SetActive(true));
             // onOpen.Invoke(gameObject);
         }
 
+        public void SetOnOpen(Action<GameObject> func)
+        {
+            onOpen.Add(func);
+        }
+
+        public void SetOnCose(Action<GameObject> func)
+        {
+            onClose.Add(func);
+        }
 
         public void ClosePanel()
         {
             canvasGroup = this.GetComponent<CanvasGroup>();
             canvasGroup.interactable = false;
 
-            onClose.Invoke(gameObject);
+            onClose.ForEach(t=>t.Invoke(gameObject));
 
             LeanTween.alphaCanvas(this.canvasGroup, 0, FadeTime).setOnComplete((t)=> this.gameObject.SetActive(false));
 

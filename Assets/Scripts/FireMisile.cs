@@ -36,6 +36,8 @@ public class FireMisile: MonoBehaviour
 
             LastPosition = transform.position;
 
+            isMoving = false;
+
             if (!isMoving)
             {
                 timeCounter += Time.deltaTime;
@@ -45,10 +47,6 @@ public class FireMisile: MonoBehaviour
                     timeCounter -= ShootingUpdateTime;
                     Fire();
                 }
-            }
-            else
-            {
-                timeCounter = 0;
             }
 
             //if (Input.GetKeyDown(KeyCode.Space))

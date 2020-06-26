@@ -3,6 +3,7 @@ using Assets.Scripts.Enemies;
 using Assets.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.UI.Overlay
 {
@@ -11,11 +12,23 @@ namespace Assets.Scripts.UI.Overlay
         public BasePanel gameOverPanel;
         public GameController GameController;
         public AdManager AdManager;
+        public Button ReviveButton;
+
+        private bool WasRevived
+        {
+            get => LocalStorage.GetBool("was_revived");
+            set => LocalStorage.SetBool("was_revived", value);
+        }
 
 
         // Start is called before the first frame update
         void Start()
         {
+            WasRevived = false;
+            ReviveButton.enabled = true;
+            gameOverPanel.SetOnOpen(t => GameController.EnablePauseButton(false));
+            gameOverPanel.SetOnOpen(t => ReviveButton.interactable = !WasRevived);
+            WasRevived = false;
             AdManager.RequestInterstitial();
             AdManager.RequestRewarded();
 
@@ -26,6 +39,8 @@ namespace Assets.Scripts.UI.Overlay
         {
             if (RestartGame)
             {
+                GameController.EnablePauseButton(true);
+
                 RestartGame = false;
                 gameOverPanel.ClosePanel();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
@@ -33,6 +48,7 @@ namespace Assets.Scripts.UI.Overlay
 
             if (GoToMenu)
             {
+                GameController.EnablePauseButton(true);
                 AmplitudeManager.LogOnGoBackToMenuOnGame();
                 GoToMenu = false;
                 SceneManager.LoadScene("MenuGUI",LoadSceneMode.Single);
@@ -40,6 +56,8 @@ namespace Assets.Scripts.UI.Overlay
 
             if (Revive)
             {
+                WasRevived = true;
+                GameController.EnablePauseButton(true);
                 gameOverPanel.ClosePanel();
 
                 GameController.ResumeGame();

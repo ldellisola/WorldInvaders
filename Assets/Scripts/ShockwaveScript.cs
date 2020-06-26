@@ -10,6 +10,8 @@ public class ShockwaveScript : MonoBehaviour
     private bool isRunning = false;
     public GameController GameController;
     public AudioSource AudioSource;
+
+    public float maxSize = 6;
 	void Awake ()
     {
         AudioSource = GetComponent<AudioSource>();
@@ -21,7 +23,7 @@ public class ShockwaveScript : MonoBehaviour
         if (isRunning && !GameController.IsGamePaused)
         {
             transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
-            if (transform.localScale.x > 2.5)
+            if (transform.localScale.x > maxSize)
             {
                 transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
 
@@ -33,8 +35,9 @@ public class ShockwaveScript : MonoBehaviour
 
     }
 
-    public void GenerateWave()
+    public void GenerateWave(Vector2 pos)
     {
+        this.transform.position = pos;
         gameObject.SetActive(true);
         AudioSource.Play();
         isRunning = true;

@@ -55,7 +55,7 @@ namespace Assets.Scripts.UI.Menu
                     FastEnemy, TankEnemy, RegularEnemy
                 },
                 Name = "Waves",
-                WorldLife = 2000,
+                WorldLife = 1000,
                 WorldSprite = WorldSprite,
                 mode = SharedLevelData.LevelMode.Unlimited
             };

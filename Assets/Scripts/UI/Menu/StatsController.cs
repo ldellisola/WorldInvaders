@@ -23,7 +23,7 @@ namespace Assets.Scripts.UI.Menu
 
         void Awake()
         {
-            StatsPanel.onOpen = OnOpen;
+            StatsPanel.SetOnOpen(OnOpen);
         }
 
         private void OnOpen(GameObject obj)

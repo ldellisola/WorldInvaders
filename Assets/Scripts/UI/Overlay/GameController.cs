@@ -15,6 +15,7 @@ namespace Assets.Scripts.UI.Overlay
 
         public AdManager AdManager;
 
+        public Button PauseButton;
         public Slider SpaceshipHealthBar;
         public Slider WorldHealthBar;
         public EnemyGenerator EnemyGenerator;
@@ -39,11 +40,12 @@ namespace Assets.Scripts.UI.Overlay
             IsGameLost = false;
             AdManager.RequestBanner();
 
-            PausePanel.onOpen = t => { PauseGame(); };
-            PausePanel.onClose = t => { ResumeGame(); };
+            PausePanel.SetOnOpen(t => PauseGame());
+            PausePanel.SetOnCose(t => ResumeGame());
 
-            GameOverPanel.onOpen = t => { PauseGame(); };
-            GameOverPanel.onClose = t => { ResumeGame(); };
+            GameOverPanel.SetOnOpen(t => PauseGame());
+            GameOverPanel.SetOnCose(t => ResumeGame());
+
 
             levelData = LocalStorage.GetObject<SharedLevelData>("levelData");
 
@@ -68,12 +70,17 @@ namespace Assets.Scripts.UI.Overlay
 
             if (EnemyGenerator.GameWon())
             {
+                EnablePauseButton(false);
                 GameOverPanel.OpenPanel();
                 IsGameLost = false;
             }
         }
 
 
+        public void EnablePauseButton(bool state)
+        {
+            PauseButton.enabled = state;
+        }
 
         public void ButtonClick_OpenPauseMenu()
         {
@@ -112,6 +119,7 @@ namespace Assets.Scripts.UI.Overlay
 
             if (SpaceShip.life <= 0)
             {
+                // EnablePauseButton(false);
                 GameOverPanel.OpenPanel();
                 IsGameLost = true;
             }

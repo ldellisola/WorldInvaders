@@ -109,7 +109,7 @@ namespace Assets.Scripts.Perks
                     break;
                 case Type.Weapon:
                     GameStats.PerkEnergyBlast++;
-                    Shockwave.GenerateWave();
+                    Shockwave.GenerateWave(transform.position);
                     break;
             }
         }

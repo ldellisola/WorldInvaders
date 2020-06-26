@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Misiles;
+﻿using Assets.Scripts.Enemies;
+using Assets.Scripts.Misiles;
 using Assets.Scripts.UI.Overlay;
 using Assets.Scripts.Utils;
 using UnityEngine;
@@ -38,6 +39,13 @@ namespace Assets.Scripts
                     GameStats.DamagePlayer += misile.damage;
                     misile.Explode();
                 }
+            }
+
+            if (obj.gameObject.TryGetComponent(out Enemy enemy))
+            {
+                life -= enemy.CollisionDamage;
+                GameStats.DamagePlayer += enemy.CollisionDamage;
+                enemy.Explode();
             }
         }
         // Update is called once per frame
